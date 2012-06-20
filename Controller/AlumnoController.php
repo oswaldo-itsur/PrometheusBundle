@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/alumnos")
+ * @Route("/alumno")
  */
 class AlumnoController extends Controller
 {
