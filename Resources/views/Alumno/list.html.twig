@@ -1,0 +1,27 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+{% block titulo %}
+    Lista Alumnos
+{% endblock %}
+
+{% block body %}
+    <h2>Alumnos</h2>
+    <br>
+    <table>
+    	<tr>
+	    	<th>No. Control</th>
+	    	<th>Nombre</th>
+            <th>E-Mail</th>
+	    	<th>Editar</th>
+	    	<th>Eliminar</th>
+    	</tr>
+    	{% for alumno in alumnos %}
+    	    <tr>
+    	    	<td>{{alumno.nocontrol}}</td> 
+    	    	<td>{{alumno.nombre}}</td> 
+                <td>{{alumno.correo}}</td>
+    	    	<td><a href="{{ path('alumno_update',{'nocontrol':alumno.nocontrol}) }}">Editar</a></td> 
+    	    	<td><a href="{{ path('alumno_remove',{'nocontrol':alumno.nocontrol}) }}">Eliminar</a></td> 
+    	    </tr>
+    	{% endfor %}
+    </table>
+{% endblock %}

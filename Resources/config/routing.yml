@@ -1,0 +1,4 @@
+_prometheus_alumnos:
+   resource: "@InformaticaPrometheusBundle/Controller/AlumnoController.php"
+   type:     annotation
+
