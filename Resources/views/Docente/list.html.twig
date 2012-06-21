@@ -1,0 +1,37 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+
+{% block titulo %}
+Lista de Docentes
+{% endblock %}
+
+{% block body %}
+    <h3>Lista de Docentes </h3>
+    <br/>
+    
+    <a href="{{path('docente_new') }}">Nuevo Docente</a>
+    <br/>
+    <br/>
+    <table border="1">
+        <tr>
+            <th>Clave</th>
+            <th>Nombre</th>
+            <th>usuario</th>
+            <th>Operaciones</th>
+        </tr>
+        {% for docente in docentes %}
+            <tr>
+                <td>{{docente.clave}}</td>
+                <td>{{docente.nombre}}</td>
+                <td>{{docente.usuario}}</td>
+                <td>
+                   <a href="{{path('docente_update',{'clave':docente.clave} ) }}">Update</a>
+                   |
+                   <a href="{{path('docente_remove',{'clave':docente.clave} ) }}">Remove</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+
+{% endblock %}

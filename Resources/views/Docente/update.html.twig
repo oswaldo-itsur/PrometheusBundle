@@ -1,0 +1,14 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+
+{% block titulo %}
+Actualizar Docente
+{% endblock %}
+
+{% block body %}
+    <h3>Actualizar Docente</h3>
+    
+    <form action="{{ path('docente_update', {'clave':clave} ) }}" method="POST" {{ form_enctype(form) }}>
+       {{ form_widget(form) }}
+       <input type="submit" />
+    </form>
+{% endblock %}
