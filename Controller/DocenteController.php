@@ -19,7 +19,7 @@ class DocenteController extends Controller
      * @Route("/")
      * @Template()
      */
-    public function indexAction($name)
+    public function indexAction()
     {
          return $this->redirect($this->generateUrl('docente_list'));
     }
