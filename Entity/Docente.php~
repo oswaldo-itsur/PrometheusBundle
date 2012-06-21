@@ -149,24 +149,4 @@ class Docente
     {
         return $this->contrasena;
     }
-
-    /**
-     * Add asignaturas
-     *
-     * @param Informatica\PrometheusBundle\Entity\Asignatura $asignaturas
-     */
-    public function addAsignatura(\Informatica\PrometheusBundle\Entity\Asignatura $asignaturas)
-    {
-        $this->asignaturas[] = $asignaturas;
-    }
-
-    /**
-     * Get asignaturas
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getAsignaturas()
-    {
-        return $this->asignaturas;
-    }
 }

@@ -150,24 +150,4 @@ class Asignatura
     {
         return $this->unidades;
     }
-
-    /**
-     * Add docentes
-     *
-     * @param Informatica\PrometheusBundle\Entity\Docente $docentes
-     */
-    public function addDocente(\Informatica\PrometheusBundle\Entity\Docente $docentes)
-    {
-        $this->docentes[] = $docentes;
-    }
-
-    /**
-     * Get docentes
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getDocentes()
-    {
-        return $this->docentes;
-    }
 }
