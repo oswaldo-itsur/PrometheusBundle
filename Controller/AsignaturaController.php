@@ -68,7 +68,7 @@ class AsignaturaController extends Controller
 	public function updateAction(Request $request, $clave)
 	{
 	   $repository = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Asignatura');
-        $asignatura = $repository->findOneByNocontrol($clave);
+        $asignatura = $repository->findOneByClave($clave);
 
         $form = $this->createForm(new AsignaturaType(),$asignatura);
 
@@ -87,7 +87,7 @@ class AsignaturaController extends Controller
 	}
 	
 	 /**
-     * @Route("/remove/{nocontrol}", name="asignatura_remove")
+     * @Route("/remove/{clave}", name="asignatura_remove")
      * @Template()
      */
 	public function removeAction($clave)
