@@ -87,7 +87,7 @@ class AsignaturaController extends Controller
 	}
 	
 	 /**
-     * @Route("/remove/{nocontrol}", name="alumno_remove")
+     * @Route("/remove/{nocontrol}", name="asignatura_remove")
      * @Template()
      */
 	public function removeAction($clave)
