@@ -10,7 +10,7 @@ use Informatica\PrometheusBundle\Entity\Alumno;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/alumno")
+ * @Route("/alumnos")
  */
 class AlumnoController extends Controller
 {
