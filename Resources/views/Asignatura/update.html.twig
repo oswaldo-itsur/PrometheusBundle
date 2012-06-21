@@ -1,0 +1,11 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+{% block titulo %}
+    Nuevo Asignatura
+{% endblock %}
+
+{% block body %}
+    <form action="{{ path('asignatura_update',{'clave':clave}) }}" method="post" {{ form_enctype(form) }}>
+    	{{ form_widget(form) }}
+    	<input type="submit">
+    </form>
+{% endblock %}

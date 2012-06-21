@@ -1,0 +1,27 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+{% block titulo %}
+    Lista Asignatura
+{% endblock %}
+
+{% block body %}
+    <h2>Asignatura</h2>
+    <br>
+    <table>
+    	<tr>
+	    	<th>Clave</th>
+	    	<th>Nombre</th>
+            <th>Carrera</th>
+	    	<th>Editar</th>
+	    	<th>Eliminar</th>
+    	</tr>
+    	{% for asignatura in asignaturas %}
+    	    <tr>
+    	    	<td>{{asignatura.clave}}</td> 
+    	    	<td>{{asignatura.nombre}}</td> 
+                <td>{{asignatura.carrera}}</td>
+    	    	<td><a href="{{ path('asignatura_update',{'clave':asignatura.clave}) }}">Editar</a></td> 
+    	    	<td><a href="{{ path('asignatura_remove',{'clave':asignatura.clavel}) }}">Eliminar</a></td> 
+    	    </tr>
+    	{% endfor %}
+    </table>
+{% endblock %}
