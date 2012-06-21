@@ -5,4 +5,8 @@ _prometheus_alumnos:
 _prometheus_docentes:
     resource: "@InformaticaPrometheusBundle/Controller/DocenteController.php"
     type:     annotation
+	
+-prometheus_asignatura:
+    resource: "@InformaticaPrometheusBundle/Controller/AsignaturaController.php"
+	type:     annotation
 
