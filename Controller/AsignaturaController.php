@@ -123,16 +123,4 @@ class AsignaturaController extends Controller
     }
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
