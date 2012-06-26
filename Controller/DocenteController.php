@@ -39,7 +39,7 @@ class DocenteController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($docente);
                 $em->flush();
-                return $this->redirect($this->generateUrl('docente_messages'));
+                return $this->redirect($this->generateUrl('docente_list'));
             }
         }
         return array('form'=> $form->createView());
@@ -74,7 +74,7 @@ class DocenteController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($docente);
                 $em->flush();
-                return $this->redirect($this->generateUrl('docente_messages'));
+                return $this->redirect($this->generateUrl('docente_list'));
             }
         }
         return array('form'=> $form->createView(),
@@ -99,7 +99,7 @@ class DocenteController extends Controller
         $em->remove($docente);
         $em->flush();
 
-        return array('mensaje'=>'Docente eliminado');
+        return $this->redirect($this->generateUrl('docente_list'));
     }
 
    /**

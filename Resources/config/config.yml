@@ -1,0 +1,10 @@
+parameters:
+    carreras:
+        - Licenciatura en Informática
+        - Ingeniería en Informática
+
+    periodos:
+        - Enero - Junio
+        - Agosto - Diciembre
+        - Verano
+        - Invierno

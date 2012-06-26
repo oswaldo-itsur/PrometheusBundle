@@ -5,11 +5,7 @@ Lista de Docentes
 {% endblock %}
 
 {% block body %}
-    <h3>Lista de Docentes </h3>
-    <br/>
-    
-    <a href="{{path('docente_new') }}">Nuevo Docente</a>
-    <br/>
+    <h2>Lista de Docentes</h2>
     <br/>
     <table border="1">
         <tr>
@@ -30,7 +26,7 @@ Lista de Docentes
                 </td>
             </tr>
         {% endfor %}
-
+        <tr><td colspan="5" align="right"><a href="{{path('docente_new') }}">Nuevo Docente</a></td></tr>
     </table>
 
 

@@ -1,14 +1,12 @@
+<!DOCTYPE html>
 <html>
-<head>
-	<title>
-		{% block titulo %}
-    		titulo
-		{% endblock %}
-	</title>
-</head>
-<body>
-	{% block body %}
-	    cuerpo
-	{% endblock %}
-</body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+        <title>{% block titulo %}Titulo Génerico{% endblock %}</title>
+    </head>
+    <body>
+       {% block body %}
+           Cuerpo Génerico
+       {% endblock %}
+    </body>
 </html>

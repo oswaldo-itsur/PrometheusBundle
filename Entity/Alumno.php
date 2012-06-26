@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Informatica\PrometheusBundle\Entity\Alumno
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Informatica\PrometheusBundle\Entity\AlumnoRepository")
+ * @ORM\Entity(repositoryClass="Informatica\PrometheusBundle\Repository\AlumnoRepository")
  */
 class Alumno
 {
@@ -42,7 +42,27 @@ class Alumno
      */
     private $correo;
 
-
+    /**
+     * @var string $contrasena
+     *
+     * @ORM\Column(name="contrasena", type="string", length=10)
+     */
+    private $contrasena;
+    
+    
+    
+    /**
+     * @var $grupos
+     *
+     * @ORM\ManyToMany(targetEntity="Grupo", mappedBy="alumnos")
+     */
+    private $grupos;
+    
+    
+    public function __construct() {
+        $this->grupos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -111,5 +131,45 @@ class Alumno
     public function getCorreo()
     {
         return $this->correo;
+    }
+
+    /**
+     * Add grupos
+     *
+     * @param Informatica\PrometheusBundle\Entity\Grupo $grupos
+     */
+    public function addGrupo(\Informatica\PrometheusBundle\Entity\Grupo $grupos)
+    {
+        $this->grupos[] = $grupos;
+    }
+
+    /**
+     * Get grupos
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getGrupos()
+    {
+        return $this->grupos;
+    }
+
+    /**
+     * Set contrasena
+     *
+     * @param string $contrasena
+     */
+    public function setContrasena($contrasena)
+    {
+        $this->contrasena = $contrasena;
+    }
+
+    /**
+     * Get contrasena
+     *
+     * @return string 
+     */
+    public function getContrasena()
+    {
+        return $this->contrasena;
     }
 }

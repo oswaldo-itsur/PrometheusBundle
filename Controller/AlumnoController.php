@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 class AlumnoController extends Controller
 {
     /**
+    }
+    
      * @Route("/new", name="alumno_new")
      * @Template()
      */

@@ -1,0 +1,35 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+
+{% block titulo %}
+Lista de Grupos
+{% endblock %}
+
+{% block body %}
+    <h2>Lista de Grupos</h2>
+    <br/>
+    <table border="1">
+        <tr>
+            <th>Clave</th>
+            <th>Año</th>
+            <th>Periodo</th>
+            <th>Semestre</th>
+            <th>Operaciones</th>
+        </tr>
+        {% for grupo in grupos %}
+            <tr>
+                <td>{{grupo.clave}}</td>
+                <td>{{grupo.anio}}</td>
+                <td>{{grupo.periodo}}</td>
+                <td>{{grupo.semestre}}</td>
+                <td>
+                   <a href="{{path('grupo_update',{'clave':grupo.clave} ) }}">Update</a>
+                   |
+                   <a href="{{path('grupo_remove',{'clave':grupo.clave} ) }}">Remove</a>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr><td colspan="5" align="right"><a href="{{path('grupo_new') }}">Nuevo Grupo</a></td></tr>
+    </table>
+
+
+{% endblock %}

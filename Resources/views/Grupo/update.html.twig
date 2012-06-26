@@ -1,0 +1,14 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+
+{% block titulo %}
+Actualizar Grupo
+{% endblock %}
+
+{% block body %}
+    <h3>Actualizar Grupo</h3>
+    
+    <form action="{{ path('grupo_update', {'clave':clave} ) }}" method="POST" {{ form_enctype(form) }}>
+       {{ form_widget(form) }}
+       <input type="submit" />
+    </form>
+{% endblock %}

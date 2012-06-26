@@ -1,0 +1,14 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+
+{% block titulo %}
+Nuevo Grupo
+{% endblock %}
+
+{% block body %}
+    <h3>Nuevo Grupo</h3>
+    
+    <form action="{{ path('grupo_new') }}" method="POST" {{ form_enctype(form) }}>
+       {{ form_widget(form) }}
+       <input type="submit" />
+    </form>
+{% endblock %}

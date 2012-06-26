@@ -1,0 +1,23 @@
+app:
+   name: Prometheus
+   version: Version 1.0
+   credits: Created by: Eduardo, Ozwaldo, Hugo
+
+welcome:
+   welcome: Welcome to evaluation tool
+   date.time: DateTime
+    
+groups:
+   title: Group's List
+    
+asigments:
+   title: Asigment's List
+    
+students:
+   title: Student's List
+   
+teachers:
+   title: Teacher's List
+   
+
+

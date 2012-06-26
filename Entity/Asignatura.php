@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Informatica\PrometheusBundle\Entity\Asignatura
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Informatica\PrometheusBundle\Entity\AsignaturaRepository")
+ * @ORM\Entity(repositoryClass="Informatica\PrometheusBundle\Repository\AsignaturaRepository")
  */
 class Asignatura
 {
@@ -49,16 +49,37 @@ class Asignatura
      */
     private $unidades;
 
+
     /**
      * @var $docentes
-     * 
+     *
      * @ORM\ManyToMany(targetEntity="Docente", inversedBy="docentes")
      * @ORM\JoinTable(name="docentes_asignaturas")
      */
     private $docentes;
+    
+    
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="Examen", mappedBy="asignatura")
+     * @ORM\OrderBy({"id" = "ASC"})
+     */
+    private $examenes;
+    
+    
+     /**
+     *
+     * @ORM\OneToMany(targetEntity="Pregunta", mappedBy="asignatura")
+     * @ORM\OrderBy({"id" = "ASC"})
+     */
+    private $preguntas;
+
+
 
     public function __construct() {
         $this->docentes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->examenes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->preguntas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -169,5 +190,45 @@ class Asignatura
     public function getDocentes()
     {
         return $this->docentes;
+    }
+
+    /**
+     * Add examenes
+     *
+     * @param Informatica\PrometheusBundle\Entity\Examen $examenes
+     */
+    public function addExamen(\Informatica\PrometheusBundle\Entity\Examen $examenes)
+    {
+        $this->examenes[] = $examenes;
+    }
+
+    /**
+     * Get examenes
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getExamenes()
+    {
+        return $this->examenes;
+    }
+
+    /**
+     * Add preguntas
+     *
+     * @param Informatica\PrometheusBundle\Entity\Pregunta $preguntas
+     */
+    public function addPregunta(\Informatica\PrometheusBundle\Entity\Pregunta $preguntas)
+    {
+        $this->preguntas[] = $preguntas;
+    }
+
+    /**
+     * Get preguntas
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getPreguntas()
+    {
+        return $this->preguntas;
     }
 }

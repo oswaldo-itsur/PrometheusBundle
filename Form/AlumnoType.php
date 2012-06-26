@@ -9,6 +9,7 @@ class AlumnoType extends AbstractType
 		$generador->add('nocontrol',null,array('label'=>'Numero de Control:'));
 		$generador->add('nombre',null,array('label' => 'Nombre del Alumno:'));
 		$generador->add('correo','email',array('label' => 'E-Mail:'));
+		$generador->add('contrasena','password', array( 'label' => 'Contraseña: '));
 	}
 	public function getName(){
 		return 'Alumno';

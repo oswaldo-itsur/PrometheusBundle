@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Informatica\PrometheusBundle\Entity\Docente
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Informatica\PrometheusBundle\Entity\DocenteRepository")
+ * @ORM\Entity(repositoryClass="Informatica\PrometheusBundle\Repository\DocenteRepository")
  */
 class Docente
 {
@@ -48,17 +48,30 @@ class Docente
      * @ORM\Column(name="contrasena", type="string", length=10)
      */
     private $contrasena;
-
+    
+    
     /**
      * @var $asignaturas
      *
      * @ORM\ManyToMany(targetEntity="Asignatura", mappedBy="docentes")
      */
     private $asignaturas;
-
-     public function __construct() {
+    
+    
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="Examen", mappedBy="docente")
+     * @ORM\OrderBy({"id" = "ASC"})
+     */
+    private $examenes;
+    
+    
+    
+    public function __construct() {
         $this->asignaturas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->examenes = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
 
     /**
      * Get id
@@ -168,5 +181,25 @@ class Docente
     public function getAsignaturas()
     {
         return $this->asignaturas;
+    }
+
+    /**
+     * Add examenes
+     *
+     * @param Informatica\PrometheusBundle\Entity\Examen $examenes
+     */
+    public function addExamen(\Informatica\PrometheusBundle\Entity\Examen $examenes)
+    {
+        $this->examenes[] = $examenes;
+    }
+
+    /**
+     * Get examenes
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getExamenes()
+    {
+        return $this->examenes;
     }
 }

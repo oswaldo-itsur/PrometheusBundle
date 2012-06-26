@@ -6,15 +6,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class DefaultController extends Controller
+/**
+ * @Route("/")
+ */
+class WelcomeController extends Controller
 {
     /**
-     * @Route("/test")
+     * @Route("/")
      * @Template()
      */
     public function indexAction()
     {
-        $carreras = $this->container->getParameter('carreras');
-        return array('carreras' => $carreras);
+         return array(
+             'message' => 'Welcome',
+             'date' =>  date('g:i a l j F Y'),
+         );
     }
+    
+   
 }

@@ -10,7 +10,7 @@ use Informatica\PrometheusBundle\Entity\Asignatura;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/asignatura")
+ * @Route("/asignaturas")
  */
 class AsignaturaController extends Controller
 {
@@ -18,7 +18,7 @@ class AsignaturaController extends Controller
      * @Route("/")
      * @Template()
      */
-    public function indexAction($name)
+    public function indexAction()
     {
          return $this->redirect($this->generateUrl('asignatura_list'));
     }
@@ -29,8 +29,12 @@ class AsignaturaController extends Controller
      */
    	public function newAction(Request $request)
 	{
-		 $asignatura = new Asignatura();
-         $form = $this->createForm(new AsignaturaType(),$asignatura);
+     $carreras = $this->container->getParameter('carreras');
+     $asignatura = new Asignatura();
+     $asignaturaType = new AsignaturaType();
+     $asignaturaType->setCarreras($carreras);
+     
+     $form = $this->createForm($asignaturaType, $asignatura);
 
 		 if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);
@@ -39,7 +43,7 @@ class AsignaturaController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($asignatura);
                 $em->flush();
-                return $this->redirect($this->generateUrl('asignatura_message'));
+                return $this->redirect($this->generateUrl('asignatura_list'));
             }
         }
         return array('form'=>$form->createView());
@@ -67,10 +71,14 @@ class AsignaturaController extends Controller
      */
 	public function updateAction(Request $request, $clave)
 	{
-	   $repository = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Asignatura');
+        $carreras = $this->container->getParameter('carreras');
+        $repository = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Asignatura');
         $asignatura = $repository->findOneByClave($clave);
 
-        $form = $this->createForm(new AsignaturaType(),$asignatura);
+        $asignaturaType = new AsignaturaType();
+        $asignaturaType->setCarreras($carreras);
+
+        $form = $this->createForm($asignaturaType, $asignatura);
 
         if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);
@@ -79,7 +87,7 @@ class AsignaturaController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($asignatura);
                 $em->flush();
-                return $this->redirect($this->generateUrl('asignatura_message'));
+                return $this->redirect($this->generateUrl('asignatura_list'));
             }
         }
         return array('form'=>$form->createView(),'clave'=>$clave);
@@ -101,7 +109,7 @@ class AsignaturaController extends Controller
         $em->remove($asignatura);
         $em->flush();
 
-        return array('mensaje'=>"asignatura con clave $clave eliminado correctamente");
+        return $this->redirect($this->generateUrl('asignatura_list'));
 	}
 	
 	

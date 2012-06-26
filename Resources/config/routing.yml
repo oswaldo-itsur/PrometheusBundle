@@ -1,3 +1,11 @@
+_prometheus_default:
+    resource: "@InformaticaPrometheusBundle/Controller/DefaultController.php"
+    type:     annotation
+    
+_prometheus_welcome:
+    resource: "@InformaticaPrometheusBundle/Controller/WelcomeController.php"
+    type:     annotation
+
 _prometheus_alumnos:
    resource: "@InformaticaPrometheusBundle/Controller/AlumnoController.php"
    type:     annotation
@@ -6,7 +14,11 @@ _prometheus_docentes:
     resource: "@InformaticaPrometheusBundle/Controller/DocenteController.php"
     type:     annotation
 
--prometheus_asignatura:
+_prometheus_asignaturas:
     resource: "@InformaticaPrometheusBundle/Controller/AsignaturaController.php"
+    type:     annotation
+
+_prometheus_grupos:
+    resource: "@InformaticaPrometheusBundle/Controller/GrupoController.php"
     type:     annotation
 
