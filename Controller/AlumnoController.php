@@ -42,7 +42,6 @@ class AlumnoController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($alumno);
                 $em->flush();
-                return $this->redirect($this->generateUrl('alumno_message'));
                 return $this->redirect($this->generateUrl('alumno_list'));
             }
         }
@@ -77,7 +76,6 @@ class AlumnoController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($alumno);
                 $em->flush();
-                return $this->redirect($this->generateUrl('alumno_message'));
                 return $this->redirect($this->generateUrl('alumno_list'));
             }
         }
@@ -98,7 +96,6 @@ class AlumnoController extends Controller
         $em->remove($alumno);
         $em->flush();
 
-        return array('mensaje'=>"numero de control $nocontrol eliminado correctamente");
         return $this->redirect($this->generateUrl('alumno_list'));
     }
 
