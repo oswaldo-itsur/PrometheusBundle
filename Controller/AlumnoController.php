@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Informatica\PrometheusBundle\Form\AlumnoType;
 use Informatica\PrometheusBundle\Entity\Alumno;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/alumnos")
@@ -15,8 +16,16 @@ use Symfony\Component\HttpFoundation\Request;
 class AlumnoController extends Controller
 {
     /**
+     * @Route("/")
+     * @Template()
+     */
+    public function indexAction()
+    {
+         return $this->redirect($this->generateUrl('alumno_list'));
     }
     
+    
+    /**
      * @Route("/new", name="alumno_new")
      * @Template()
      */
@@ -34,6 +43,7 @@ class AlumnoController extends Controller
                 $em->persist($alumno);
                 $em->flush();
                 return $this->redirect($this->generateUrl('alumno_message'));
+                return $this->redirect($this->generateUrl('alumno_list'));
             }
         }
         return array('form'=>$form->createView());
@@ -68,6 +78,7 @@ class AlumnoController extends Controller
                 $em->persist($alumno);
                 $em->flush();
                 return $this->redirect($this->generateUrl('alumno_message'));
+                return $this->redirect($this->generateUrl('alumno_list'));
             }
         }
         return array('form'=>$form->createView(),'nocontrol'=>$nocontrol);
@@ -88,6 +99,7 @@ class AlumnoController extends Controller
         $em->flush();
 
         return array('mensaje'=>"numero de control $nocontrol eliminado correctamente");
+        return $this->redirect($this->generateUrl('alumno_list'));
     }
 
     /**
@@ -104,6 +116,22 @@ class AlumnoController extends Controller
      */
     public function messageAction(){
         return array("mensaje" => "Alumno guardado");
+    }
+    
+     /**
+     * @Route("/ajax")
+     * @Template()
+     */
+        $repository = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Alumno');
+        $alumnos = $repository->findAll();
+        
+        $request = $this->getRequest(); 
+        //if ($request->isXmlHttpRequest()) { 
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent(json_encode($alumnos));
+        return $response;
+        // )); 
     }
 
   
