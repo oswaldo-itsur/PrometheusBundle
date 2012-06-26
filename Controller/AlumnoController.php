@@ -122,6 +122,7 @@ class AlumnoController extends Controller
      * @Route("/ajax")
      * @Template()
      */
+    public function ajaxAction(){
         $repository = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Alumno');
         $alumnos = $repository->findAll();
         
