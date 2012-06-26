@@ -2,6 +2,11 @@ app:
    name: Prometheus
    version: Version 1.0
    credits: Created by: Eduardo, Ozwaldo, Hugo
+   
+titles:
+   operations: Operations
+   update: Update
+   remove: Remove
 
 welcome:
    welcome: Welcome to evaluation tool
@@ -9,15 +14,29 @@ welcome:
     
 groups:
    title: Group's List
+   key: Key
+   year: Year
+   period: Period
+   semester: Semester
     
 asigments:
    title: Asigment's List
+   key: Key
+   name: Name
+   carrera: Carrera
     
 students:
    title: Student's List
+   matriculate: Matriculate
+   name: Name
+   mail: E-Mail
    
 teachers:
    title: Teacher's List
+   key: Key
+   name: Name
+   user: User
+   
    
 
 

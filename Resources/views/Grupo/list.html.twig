@@ -1,19 +1,19 @@
 {% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
 
 {% block titulo %}
-Lista de Grupos
+{% trans %}groups.title{% endtrans %}
 {% endblock %}
 
 {% block body %}
-    <h2>Lista de Grupos</h2>
+    <h2>{% trans %}groups.title{% endtrans %}</h2>
     <br/>
     <table border="1">
         <tr>
-            <th>Clave</th>
-            <th>Año</th>
-            <th>Periodo</th>
-            <th>Semestre</th>
-            <th>Operaciones</th>
+            <th>{% trans %}groups.key{% endtrans %}</th>
+            <th>{% trans %}groups.year{% endtrans %}</th>
+            <th>{% trans %}groups.period{% endtrans %}</th>
+            <th>{% trans %}groups.semester{% endtrans %}</th>
+            <th>{% trans %}titles.operations{% endtrans %}</th>
         </tr>
         {% for grupo in grupos %}
             <tr>

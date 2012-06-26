@@ -1,17 +1,17 @@
 {% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
 {% block titulo %}
-    Lista  de Alumnos
+    {% trans %}students.title{% endtrans %}
 {% endblock %}
 
 {% block body %}
-    <h2>Lista de Alumnos</h2>
+    <h2>{% trans %}students.title{% endtrans %}</h2>
     <br>
     <table border="1">
     	<tr>
-	    	<th>No. Control</th>
-	    	<th>Nombre</th>
-            <th>E-Mail</th>
-	    	<th>Operaciones</th>
+	    	<th>{% trans %}students.matriculate{% endtrans %}</th>
+	    	<th>{% trans %}students.name{% endtrans %}</th>
+            <th>{% trans %}students.mail{% endtrans %}</th>
+	    	<th>{% trans %}titles.operations{% endtrans %}</th>
     	</tr>
     	{% for alumno in alumnos %}
     	    <tr>
@@ -19,9 +19,9 @@
     	    	<td>{{alumno.nombre}}</td> 
                 <td>{{alumno.correo}}</td>
     	    	<td>
-                <a href="{{ path('alumno_update',{'nocontrol':alumno.nocontrol}) }}">Update</a>
+                <a href="{{ path('alumno_update',{'nocontrol':alumno.nocontrol}) }}">{% trans %}titles.update{% endtrans %}</a>
     	    	    |
-    	    	    <a href="{{ path('alumno_remove',{'nocontrol':alumno.nocontrol}) }}">Remove</a></td>
+    	    	    <a href="{{ path('alumno_remove',{'nocontrol':alumno.nocontrol}) }}">{% trans %}titles.remove{% endtrans %}</a></td>
     	    </tr>
     	{% endfor %}
         <tr><td colspan="5" align="right"><a href="{{ path("alumno_new") }}">Nuevo Alumno</a></td></tr>
