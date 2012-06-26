@@ -172,4 +172,5 @@ class Alumno
     {
         return $this->contrasena;
     }
+    
 }
