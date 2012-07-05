@@ -37,6 +37,37 @@ teachers:
    name: Name
    user: User
    
+exams:
+   title: Exam's List
+   new: New Exam
+   key: Key
+   date: Date
+   time: Time
+   unitsumber: Units Number
+   unitname: Unit's Name
+   option: Option
+   value: Value
+   period: Period
+   year: Year
+   
+questions:
+   title: Bank of Questions
+   new: New Question
+   id: Id
+   type: Type
+   statement: Statement
+   option1: Option 1
+   option2: Option 2
+   option3: Option 3
+   answer: Answer
+   value: Value
+   teem: Teem
+   unit: Unit number
+   
+evaluations:
+   title: Evaluation
+   welcome: Welcome to Prometheus the Evaluations Tool.
+   
    
 
 

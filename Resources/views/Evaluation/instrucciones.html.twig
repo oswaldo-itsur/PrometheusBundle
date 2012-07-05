@@ -1,0 +1,75 @@
+{% extends 'ItsurAeiBundle::aspirantelayout.html.twig' %}
+{% block title %}
+    Evaluación
+{% endblock %}
+
+{% block body %}
+<center>
+<table align="center" width="600">
+<tr>
+    <td>
+    <p align="center" class="advertencia">Instrucciones Generales.</p>
+    </td>
+</tr>
+<tr>
+    <td>
+     <p class="instrucciones" align="justify"> El examen se compone de 127 preguntas divididas en siete áreas de estudio, distribuidas de la siguiente manera:</p>
+      <table>
+        <td>
+        <ul>
+           <li class="opciones" type="square">45	Matemáticas.</li>
+           <li class="opciones" type="square">10	Física.</li>
+           <li class="opciones" type="square">10	Química.</li>
+           <li class="opciones" type="square"> 9 Metodología y Taller de Lectura.</li>
+           <li class="opciones" type="square">11	Administración y Contabilidad.</li>
+           <li class="opciones" type="square">25	Informática.</li>
+           <li class="opciones" type="square">16	Inglés.</li>
+        </ul>
+        </td>
+      </table>
+    </td>
+    <tr>
+    <td>
+     <p class="instrucciones" align="justify"> El tiempo requerido para contestar el examen es de 120 min (2 horas).
+
+El tiempo sugerido para cada una de las áreas es de:</p>
+       <table>
+          <td>
+          <ul>
+           <li class="opciones" type="square">60 min.  Matemáticas.</li>
+           <li class="opciones" type="square">10 min.  Física.</li>
+           <li class="opciones" type="square">10 min.   Química.</li>
+           <li class="opciones" type="square">5 min.    Metodología y Taller de Lectura.</li>
+           <li class="opciones" type="square">10 min.  Administración y Contabilidad.</li>
+           <li class="opciones" type="square">15 min.   Informática.</li>
+           <li class="opciones" type="square">10 min.   Inglés</li>
+          </ul>
+          </td>
+       </table>
+    </td>
+    </tr>
+    <tr>
+       <td>
+            <p class="instrucciones" align="justify">Las preguntas se muestran agrupadas por área y tema según correspondan.
+            Cada área contiene grupos de preguntas que corresponden a los temas de la misma, presentándose por bloques de tema.</p>
+       </td>
+    </tr>
+    <tr>
+        <td>
+           <p class="instrucciones" align="justify">El nombre de las áreas del examen aparece en la parte superior de la pantalla, resaltando la que se evalúa.</p>
+           <p class="instrucciones" align="justify">Todas las preguntas presentan cuatro posibles respuestas, y sólo una es la opción válida.</p>
+           <p class="instrucciones" align="justify">Una vez que se ha contestado el grupo de preguntas, se presiona el botón continuar, permitiendo avanzar al siguiente grupo, sin la posibilidad de volver al mismo.</p>
+           <p class="instrucciones" align="justify">Lee cuidadosamente la pregunta y selecciona la respuesta correcta. En caso de no seleccionar ninguna respuesta, ésta se considera errónea.</p>
+           <p class="instrucciones" align="justify">El aplicador del examen indicará la hora de inicio y término, el cual deberá ser respetado.</p>
+        </td>
+    </tr>
+</tr>
+</table>
+<br/>
+<br/>
+<a href="{{ path('evaluacion_grupo',{ 'ficha':aspirante.ficha, 'area':area,'seccion':seccion, 'tema':tema, 'grupo':grupo  })  }}" class="button verde">
+        Continuar
+</a>
+</center>
+
+{% endblock %}

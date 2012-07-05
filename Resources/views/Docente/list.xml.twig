@@ -1,0 +1,12 @@
+{% extends 'InformaticaPrometheusBundle::layout.xml.twig' %}
+{% block body %}
+<docentes>
+   {% for docente in docentes %}
+   <docente>
+      <clave>{{docente.clave}}</clave>
+      <nombre>{{docente.nombre}}</nombre>
+      <usuario>{{docente.usuario}}</usuario>
+   </docente>
+   {% endfor %}
+</docentes>
+{% endblock %}

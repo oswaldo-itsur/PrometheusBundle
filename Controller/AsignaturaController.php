@@ -20,7 +20,7 @@ class AsignaturaController extends Controller
      */
     public function indexAction()
     {
-         return $this->redirect($this->generateUrl('asignatura_list'));
+         return $this->redirect($this->generateUrl('asignatura_list', array('_format' => 'html')));
     }
 	
     /**
@@ -43,15 +43,16 @@ class AsignaturaController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($asignatura);
                 $em->flush();
-                return $this->redirect($this->generateUrl('asignatura_list'));
+         return $this->redirect($this->generateUrl('asignatura_list', array('_format' => 'html')));
             }
         }
         return array('form'=>$form->createView());
 		
 	}
 	
-	/**
-     * @Route("/list", name="asignatura_list")
+	 /**
+     * @Route("/list", defaults={"_format"="html"}),
+     * @Route("/list.{_format}", name="asignatura_list", requirements={"_format"= "html|xml|json"})
      * @Template()
      */
 	public function listAction()
@@ -59,9 +60,9 @@ class AsignaturaController extends Controller
 		$repository = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Asignatura');
         $asignaturas = $repository->findAll();
 
-        return array('asignaturas'=>$asignaturas);
-		
-		
+        $format = $this->getRequest()->getRequestFormat();
+        return $this->render('InformaticaPrometheusBundle:Asignatura:list.'.$format.'.twig',
+             array('asignaturas'=>$asignaturas));	
 	}
 	
 	
@@ -87,7 +88,7 @@ class AsignaturaController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($asignatura);
                 $em->flush();
-                return $this->redirect($this->generateUrl('asignatura_list'));
+                return $this->redirect($this->generateUrl('asignatura_list', array('_format' => 'html')));
             }
         }
         return array('form'=>$form->createView(),'clave'=>$clave);
@@ -109,7 +110,7 @@ class AsignaturaController extends Controller
         $em->remove($asignatura);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('asignatura_list'));
+        return $this->redirect($this->generateUrl('asignatura_list', array('_format' => 'html')));
 	}
 	
 	

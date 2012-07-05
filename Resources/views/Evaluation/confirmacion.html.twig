@@ -1,0 +1,59 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Evaluaci&oacute;n
+{% endblock %}
+
+{% block body %}
+    <tr>
+    <td>
+    <p align="center" class="titulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+    <p align="center" class="subtitulos">Confirmaci&oacute;n de datos.</p>
+    <table border=0 align="center">
+        <td>
+        <p align="left" class="etiquetas"> Ficha:</p>
+        </td>
+        <td>
+        <p align="left" class="preguntas">{{aspirante.ficha}}</p>
+        </td>
+        <tr>
+        <td>
+        <p align="left" class="etiquetas">Nombre: </p>
+        </td>
+        <td>
+        <p align="left" class="preguntas">{{aspirante.nombre}}</p>
+        </td>
+         <tr>
+        <td>
+        <p align="left" class="etiquetas">Lugar de Origen:</p>
+        </td>
+        <td>
+        <p align="left" class="preguntas">{{aspirante.lugarOrigen}}</p>
+        </td>
+         <tr>
+        <td>
+        <p align="left" class="etiquetas">Escuela de Procedencia:</p>
+        </td>
+        <td>
+        <p align="left" class="preguntas">{{aspirante.escuelaProcedencia}}</p>
+        </td>
+        <tr>
+        <td>
+        <p align="left" class="etiquetas">Aplicador:</p>
+        </td>
+        <td>
+        <p align="left" class="preguntas">{{aplicador}}</p>
+        </td>
+    </table>
+    <br/>
+    <br/>
+    <center>
+            <a href="{{ path('evaluacion_identificacion') }}" class="button verde">
+               regresar
+            </a>
+            <a href="{{ path('evaluacion_instrucciones',{ 'ficha':aspirante.ficha,'aplicador':aplicador })  }}" class="button verde">
+               Continuar
+            </a>
+    </center>
+            </td>
+    </tr>
+{% endblock %}

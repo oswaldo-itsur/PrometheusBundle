@@ -21,7 +21,7 @@ class DocenteController extends Controller
      */
     public function indexAction()
     {
-         return $this->redirect($this->generateUrl('docente_list'));
+         return $this->redirect($this->generateUrl('docente_list', array('_format' => 'html')));
     }
     
      /**
@@ -39,21 +39,25 @@ class DocenteController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($docente);
                 $em->flush();
-                return $this->redirect($this->generateUrl('docente_list'));
+                return $this->redirect($this->generateUrl('docente_list', array('_format' => 'html')));
             }
         }
         return array('form'=> $form->createView());
     }
 
-    /**
-     * @Route("/list", name="docente_list" )
+     /**
+     * @Route("/list", defaults={"_format"="html"}),
+     * @Route("/list.{_format}", name="docente_list", requirements={"_format"= "html|xml|json"})
      * @Template()
      */
     public function listAction(){
         $repository = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Docente');
-        $carreras =  $repository->findAll();
-
-        return array('docentes' => $carreras);
+        $docentes =  $repository->findAll();
+        
+        $format = $this->getRequest()->getRequestFormat();
+        
+        return $this->render('InformaticaPrometheusBundle:Docente:list.'.$format.'.twig',
+             array('docentes' => $docentes));
     }
 
     /**
@@ -74,7 +78,7 @@ class DocenteController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($docente);
                 $em->flush();
-                return $this->redirect($this->generateUrl('docente_list'));
+                return $this->redirect($this->generateUrl('docente_list', array('_format' => 'html')));
             }
         }
         return array('form'=> $form->createView(),
@@ -99,7 +103,7 @@ class DocenteController extends Controller
         $em->remove($docente);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('docente_list'));
+        return $this->redirect($this->generateUrl('docente_list', array('_format' => 'html')));
     }
 
    /**

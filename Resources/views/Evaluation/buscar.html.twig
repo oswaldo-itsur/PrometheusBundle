@@ -1,0 +1,26 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Evaluación
+{% endblock %}
+
+{% block body %}
+    <tr>
+        <td>
+            <p align="center" class="titulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+            <center>
+                <p class="subtitulos">Buscar aspirantes por nombre</p>
+                <p class="instrucciones">Escribe tu nombre (completo o una parte) con letra mayúscula.</p>
+                <form action="{{ path('evaluacion_buscar') }}" method="post" {{ form_enctype(form) }}>
+                   {{ form_widget(form) }}
+                <br/>
+                <br/>
+                <input type="submit" class="button verde" value="BUSCAR" />
+                </form>
+                <br/>
+                <a href="{{ path('evaluacion_identificacion') }}" class="button verde">
+                    Ir a Identificacion
+                </a>
+            </center>
+        </td>
+    </tr>
+{% endblock %}

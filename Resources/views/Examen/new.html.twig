@@ -1,0 +1,14 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+
+{% block titulo %}
+Nuevo Examen
+{% endblock %}
+
+{% block body %}
+    <h3>Nuevo Examen</h3>
+    
+    <form action="{{ path('examen_new') }}" method="POST" {{ form_enctype(form) }}>
+       {{ form_widget(form) }}
+       <input type="submit" />
+    </form>
+{% endblock %}

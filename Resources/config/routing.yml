@@ -22,3 +22,14 @@ _prometheus_grupos:
     resource: "@InformaticaPrometheusBundle/Controller/GrupoController.php"
     type:     annotation
 
+_prometheus_examenes:
+    resource: "@InformaticaPrometheusBundle/Controller/ExamenController.php"
+    type:     annotation
+    
+_prometheus_preguntas:
+    resource: "@InformaticaPrometheusBundle/Controller/PreguntaController.php"
+    type:     annotation
+    
+_prometheus_evaluations:
+    resource: "@InformaticaPrometheusBundle/Controller/EvaluationController.php"
+    type:     annotation

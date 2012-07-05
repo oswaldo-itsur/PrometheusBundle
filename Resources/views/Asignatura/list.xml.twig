@@ -1,0 +1,12 @@
+{% extends 'InformaticaPrometheusBundle::layout.xml.twig' %}
+{% block body %}
+<asignaturas>
+{% for asignatura in asignaturas %}
+   <asignatura>
+      <clave>{{asignatura.clave}}</clave> 
+      <nombre>{{asignatura.nombre}}</nombre> 
+      <carrera>{{asignatura.carrera}}</carrera>
+   </asignatura>
+{% endfor %}
+</asignaturas>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+
+{% block titulo %}
+{% trans %}questions.title{% endtrans %}
+{% endblock %}
+
+{% block javascripts %}
+   <script src="{{ asset('bundles/informaticaprometheus/js/bank.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block body %}
+    <h2>{% trans %}questions.title{% endtrans %}</h2>
+    <br/>
+    <input type="button" id="Button" value="Click me!">
+    <br/>
+    <table border="1">
+        <tr>
+            <th>{% trans %}questions.id{% endtrans %}</th>
+            <th>{% trans %}questions.unit{% endtrans %}</th>
+            <th>{% trans %}questions.teem{% endtrans %}</th>
+            <th>{% trans %}questions.type{% endtrans %}</th>
+            <th>{% trans %}questions.statement{% endtrans %}</th>
+            <th>{% trans %}questions.option1{% endtrans %}</th>
+            <th>{% trans %}questions.option2{% endtrans %}</th>
+            <th>{% trans %}questions.option3{% endtrans %}</th>
+            <th>{% trans %}questions.answer{% endtrans %}</th>
+            <th>{% trans %}questions.value{% endtrans %}</th>
+            
+            <th>{% trans %}titles.operations{% endtrans %}</th>
+        </tr>
+        {% for pregunta in preguntas %}
+            <tr>
+                <td>{{pregunta.id}}</td>
+                <td>{{pregunta.nounidad}}</td>
+                <td>{{pregunta.tema}}</td>
+                <td>{{pregunta.tipo}}</td>
+                <td>{{pregunta.sentencia}}</td>
+                <td>{{pregunta.opcion1}}</td>
+                <td>{{pregunta.opcion2}}</td>
+                <td>{{pregunta.opcion3}}</td>
+                <td>{{pregunta.respuesta}}</td>
+                <td>{{pregunta.valor}}</td>
+                
+                <td>
+                   <a href="{{path('pregunta_update',{'id':pregunta.id} ) }}">{% trans %}titles.update{% endtrans %}</a>
+                   |
+                   <a href="{{path('pregunta_remove',{'id':pregunta.id} ) }}">{% trans %}titles.remove{% endtrans %}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr><td colspan="11" align="right"><a href="{{path('pregunta_new') }}">{% trans %}questions.new{% endtrans %}</a></td></tr>
+    </table>
+
+
+{% endblock %}

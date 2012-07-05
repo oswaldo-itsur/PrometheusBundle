@@ -1,0 +1,12 @@
+{% extends 'InformaticaPrometheusBundle::layout.xml.twig' %}
+{% block body %}
+<alumnos>
+{% for alumno in alumnos %}
+   <alumno>
+      <nocontrol>{{alumno.nocontrol}}</nocontrol> 
+      <nombre>{{alumno.nombre}}</nombre> 
+      <correo>{{alumno.correo}}</correo>
+   </alumno>
+{% endfor %}
+</alumnos>
+{% endblock %}

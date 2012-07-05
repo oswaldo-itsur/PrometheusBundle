@@ -21,7 +21,7 @@ class GrupoController extends Controller
      */
     public function indexAction()
     {
-         return $this->redirect($this->generateUrl('grupo_list'));
+         return $this->redirect($this->generateUrl('grupo_list', array('_format' => 'html')));
     }
     
      /**
@@ -44,21 +44,25 @@ class GrupoController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($grupo);
                 $em->flush();
-                return $this->redirect($this->generateUrl('grupo_list'));
+                return $this->redirect($this->generateUrl('grupo_list', array('_format' => 'html')));
             }
         }
         return array('form'=> $form->createView());
     }
 
-    /**
-     * @Route("/list", name="grupo_list" )
+     /**
+     * @Route("/list", defaults={"_format"="html"}),
+     * @Route("/list.{_format}", name="grupo_list", requirements={"_format"= "html|xml|json"})
      * @Template()
      */
     public function listAction(){
         $repository = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Grupo');
         $grupos =  $repository->findAll();
 
-        return array('grupos' => $grupos);
+       $format = $this->getRequest()->getRequestFormat();
+        
+        return $this->render('InformaticaPrometheusBundle:Grupo:list.'.$format.'.twig',
+            array('grupos' => $grupos));
     }
 
     /**
@@ -83,7 +87,7 @@ class GrupoController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($grupo);
                 $em->flush();
-                return $this->redirect($this->generateUrl('grupo_list'));
+                return $this->redirect($this->generateUrl('grupo_list', array('_format' => 'html')));
             }
         }
         return array('form'=> $form->createView(),
@@ -108,7 +112,7 @@ class GrupoController extends Controller
         $em->remove($grupo);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('grupo_list'));
+        return $this->redirect($this->generateUrl('grupo_list', array('_format' => 'html')));
     }
 
    /**

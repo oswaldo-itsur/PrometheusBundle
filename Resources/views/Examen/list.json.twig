@@ -1,0 +1,14 @@
+[
+{% for examen in examenes %}
+ {"id":"{{examen.id}}",
+  "anio":"{{examen.anio}}",
+  "periodo","{{examen.periodo}}",
+  "nounidad","{{examen.nounidades}}",
+  "nombreunidad","{{examen.nombreunidad}}",
+  "opcion":"{{examen.opcion}}",
+  "fecha":"{{examen.fecha.format('d/m/Y')}}",
+  "hora":"{{examen.hora.format('G:i')}}",
+  "ponderacion":"{{examen.ponderacion}}"
+ },
+{% endfor %}
+]

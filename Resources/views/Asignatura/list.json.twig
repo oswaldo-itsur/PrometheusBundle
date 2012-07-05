@@ -1,0 +1,6 @@
+[{% for asignatura in asignaturas %}
+ {"clave":"{{asignatura.clave}}", 
+      "nombre":"{{asignatura.nombre}}",
+      "carrera":"{{asignatura.carrera}}"},
+ {% endfor %}
+]

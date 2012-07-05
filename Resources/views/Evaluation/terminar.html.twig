@@ -1,0 +1,35 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Evaluación
+{% endblock %}
+
+{% block body %}
+<tr>
+        <td>
+   Periodo: {{ periodo.id }}  {{ periodo.semestre }}  {{ periodo.anio }}
+   
+    <h3>
+    Confirmación de datos.
+    </h3>
+    Ficha {{aspirante.ficha}}
+    <br/>
+    Nombre {{aspirante.nombre}}
+    <br/>
+    Lugar de Origen {{aspirante.lugarOrigen}}
+    <br/>
+    Escuela de procedencia {{aspirante.escuelaProcedencia}}
+    <br/>
+    Aplicador {{aplicador}}
+    <br/>
+    <br/>
+     <a href="{{ path('evaluacion_identificacion') }}">
+        regresar
+    </a>
+    <a href="{{ path('evaluacion_instrucciones',{ 'ficha':aspirante.ficha,'aplicador':aplicador })  }}">
+        Continuar
+    </a>
+    <br/>
+    <br/>
+        </td>
+    </tr>
+{% endblock %}

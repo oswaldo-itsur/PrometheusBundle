@@ -1,0 +1,9 @@
+[
+{% for grupo in grupos %}
+ {"clave":"{{grupo.clave}}",
+  "anio":{{grupo.anio}},
+  "periodo":"{{grupo.periodo}}",
+  "semestre":"{{grupo.semestre}}"
+ }
+{% endfor %}
+]

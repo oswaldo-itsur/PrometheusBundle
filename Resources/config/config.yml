@@ -8,3 +8,11 @@ parameters:
         - Agosto - Diciembre
         - Verano
         - Invierno
+
+    opciones:
+       - Primera oportunidad
+       - Segunda oportunidad
+       - Ordinario
+       - Regularización
+       - Extraordinario
+       

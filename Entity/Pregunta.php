@@ -12,9 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Pregunta
 {
-    const SELECCIONMULTIPLE ='SELECCIONMULTIPLE';
-    const SELECCIONUNICA ='SELECCIONUNICA';
-    const ANOTACION='ANOTACION';
+    const SELECCIONMULTIPLE ='Selección Mutliple';
+    const SELECCIONUNICA ='Selección Única';
+    const ANOTACION='Anotación';
     
     
     /**
@@ -84,6 +84,14 @@ class Pregunta
 
 
     /**
+     * @var string $tipo
+     *
+     * @ORM\Column(name="tipo", type="string", length="20")
+     */
+    private $tipo;
+    
+    
+    /**
      *
      * @ORM\ManyToOne(targetEntity="Asignatura",inversedBy="preguntas")
      * @ORM\JoinColumn(name="asignatura_id", referencedColumnName="id")
@@ -96,14 +104,6 @@ class Pregunta
      * @ORM\JoinColumn(name="examen_id", referencedColumnName="id")
      */
      private $examen;
-     
-     
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity="Pregunta")
-     * @ORM\JoinColumn(name="pregunta_id", referencedColumnName="id")
-     */
-    protected $pregunta;
     
     
      /**
@@ -116,6 +116,28 @@ class Pregunta
         return $this->id;
     }
 
+
+	/**
+     * Set tipo
+     *
+     * @param string $tipo
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string 
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+    
+    
     /**
      * Set sentencia
      *
@@ -316,23 +338,4 @@ class Pregunta
         return $this->examen;
     }
 
-    /**
-     * Set pregunta
-     *
-     * @param Informatica\PrometheusBundle\Entity\Pregunta $pregunta
-     */
-    public function setPregunta(\Informatica\PrometheusBundle\Entity\Pregunta $pregunta)
-    {
-        $this->pregunta = $pregunta;
-    }
-
-    /**
-     * Get pregunta
-     *
-     * @return Informatica\PrometheusBundle\Entity\Pregunta 
-     */
-    public function getPregunta()
-    {
-        return $this->pregunta;
-    }
 }

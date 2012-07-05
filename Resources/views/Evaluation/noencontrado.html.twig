@@ -1,0 +1,18 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Evaluación
+{% endblock %}
+{% block body %}
+<td>
+<center>
+    <p align="center" class="titulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+    <br/>
+    <p align="center"><img src="{{ asset('bundles/itsuraei/images/error.png') }}"/></p>
+    <p class="advertencia">número de ficha:  <span class="titulos">{{ficha}}.</span> <span class="advertencia">¡no encontrado!</span></p>
+    <br/>
+    <a href="{{ path('evaluacion_identificacion') }}" class="button verde">
+        Regresar
+    </a>
+        </td>
+    </center>
+{% endblock %}

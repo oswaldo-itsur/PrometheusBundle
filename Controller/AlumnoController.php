@@ -21,7 +21,7 @@ class AlumnoController extends Controller
      */
     public function indexAction()
     {
-         return $this->redirect($this->generateUrl('alumno_list'));
+         return $this->redirect($this->generateUrl('alumno_list', array('_format' => 'html')));
     }
     
     
@@ -42,21 +42,25 @@ class AlumnoController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($alumno);
                 $em->flush();
-                return $this->redirect($this->generateUrl('alumno_list'));
+                return $this->redirect($this->generateUrl('alumno_list', array('_format' => 'html')));
             }
         }
         return array('form'=>$form->createView());
     }
 
     /**
-     * @Route("/list", name="alumno_list")
+     * @Route("/list", defaults={"_format"="html"}),
+     * @Route("/list.{_format}", name="alumno_list", requirements={"_format"= "html|xml|json"})
      * @Template()
      */
     public function listAction(){
         $repository = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Alumno');
         $alumnos = $repository->findAll();
 
-        return array('alumnos'=>$alumnos);
+        $format = $this->getRequest()->getRequestFormat();
+        
+        return $this->render('InformaticaPrometheusBundle:Alumno:list.'.$format.'.twig',
+            array('alumnos'=>$alumnos));
     }
 
     /**
@@ -76,7 +80,7 @@ class AlumnoController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($alumno);
                 $em->flush();
-                return $this->redirect($this->generateUrl('alumno_list'));
+                return $this->redirect($this->generateUrl('alumno_list', array('_format' => 'html')));
             }
         }
         return array('form'=>$form->createView(),'nocontrol'=>$nocontrol);
@@ -96,7 +100,7 @@ class AlumnoController extends Controller
         $em->remove($alumno);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('alumno_list'));
+        return $this->redirect($this->generateUrl('alumno_list', array('_format' => 'html')));
     }
 
     /**
@@ -131,6 +135,5 @@ class AlumnoController extends Controller
         return $response;
         // )); 
     }
-
-  
+ 
 }

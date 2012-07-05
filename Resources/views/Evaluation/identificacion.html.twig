@@ -1,0 +1,36 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Evaluaci&oacute;n
+{% endblock %}
+{% block body %}
+    <tr>
+        <td>
+        <center>
+            <p align="center" class="titulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+            <p align="center" class="advertencia">Identificaci&oacute;n</p>
+            <p align="center" class="instrucciones">Escribe tu número de ficha en la casilla correspondiente. Verifica que tus datos son los correctos,</p>
+            <p align="center" class="instrucciones"> si no es así, favor de levantar la mano y solicitar asesoría desde tu lugar al aplicador.</p>
+            <table>
+                   <td><p><img src="{{ asset('bundles/itsuraei/images/admision4.jpg') }}"/></p></td>
+                   <td>
+                       <form action="{{ path('evaluacion_identificacion') }}" method="post" class="etiquetas">
+                             {{ form_enctype(form) }}
+                             {{ form_widget(form) }}
+                       <br/>
+                       <br/>
+                   </td>
+            </table>
+            <input type="submit" class="button verde" />
+            <br/>
+            <br/>
+            <a href="{{ path('evaluacion_nuevo') }} "class="button verde">
+                Nueva ficha
+            </a>
+            <a href="{{ path('evaluacion_buscar') }}" class="button verde">
+                Buscar ficha
+            </a>
+            </form>
+        </center>
+        </td>
+    </tr>
+{% endblock %}

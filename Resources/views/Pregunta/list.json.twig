@@ -1,0 +1,15 @@
+[
+{% for pregunta in preguntas %}
+ {"id":{{pregunta.id}},
+  "anio":{{pregunta.nounidad}},
+  "tema":"{{pregunta.tema}}",
+  "tipo":"{{pregunta.tipo}}",
+  "sentencia":"{{pregunta.sentencia}}",
+  "opcion1":"{{pregunta.opcion1}}",
+  "opcion2":"{{pregunta.opcion2}}",
+  "opcion3":"{{pregunta.opcion3}}",
+  "respuesta":"{{pregunta.respuesta}}",
+  "valor":"{{pregunta.valor}}
+ },
+{% endfor %}
+]

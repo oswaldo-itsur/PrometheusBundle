@@ -1,0 +1,37 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+{% block title %}
+    {% trans %}evaluations.title{% endtrans %}
+{% endblock %}
+{% block body %}
+        <p align="center">
+           <img src="{{ asset('bundles/itsuraei/images/admision2.jpg') }}" />
+        </p>
+        <p align="center">
+           {% trans %}evaluations.welcome{% endtrans %}   
+        </p>
+        <br/>
+        <br/>
+        <table align="center" border="1" bordercolor="#006600">
+        <tr>
+         <td>
+         <p align="center" class="advertencia">
+           Políticas y directrices
+         </p>
+          <ul>
+              <li class="instrucciones" type="square">Se permite el uso de calculadora.</li>
+              <li class="instrucciones" type="square">Pedir hojas recicladas en caso de ser necesario.</li>
+              <li class="instrucciones" type="square">No se permite comer, ni tomar líquidos.</li>
+              <li class="instrucciones" type="square">Apagar sus celulares.</li>
+              <li class="instrucciones" type="square">Permanecer en silencio durante la aplicación del examen y evitar voltear a ver la pantalla del compañero.</li>
+              <li class="instrucciones" type="square">Al término del examen revisar su lugar para asegurarse de no dejar ninguna pertenencia.</li>
+           </ul>
+          </td>
+          </tr>
+        </table>
+        <br/>
+        <br/>
+        <p align="center">
+           <a href="{{ path('evaluation_identification') }}" >Next</a>
+        </p>
+            
+{% endblock %}

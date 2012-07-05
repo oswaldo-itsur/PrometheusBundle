@@ -1,0 +1,13 @@
+{% if desplegar %}
+    {% if imagen %}
+        {% if orientacion == 'izquierda' %}
+            <img src="{{ asset('bundles/itsuraei/images') }}{{imagen}}" align="left"> </img>
+        {% else %}
+            <img src="{{ asset('bundles/itsuraei/images') }}{{imagen}}" align="right"> </img>
+        {% endif %}
+    {% else %}
+        <pre class="pregunta">{{imagen}}</pre>
+    {% endif %}
+{% else %}
+    <pre class="pregunta">{{imagen}}</pre>
+{% endif %}

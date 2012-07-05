@@ -1,0 +1,122 @@
+{% extends 'ItsurAeiBundle::grupolayout.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block generic_label %}
+{% spaceless %}
+    {% if required %}
+        {% set attr = attr|merge({'class': attr.class|default('') ~ ' required'}) %}
+    {% endif %}
+    {# <label{% for attrname,attrvalue in attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>{{ label|trans }}</label> #}
+    <pre class="preguntas">{{ label|trans }}</pre>
+{% endspaceless %}
+{% endblock %}
+
+{% block field_row %}
+{% spaceless %}
+    <div>
+        <table border="0"  width="900">
+            <tr width="100%" >
+                <td colspan="7" align="justify" >
+                    {{ form_label(form, label|default(null)) }}
+                    {% render "ItsurAeiBundle:Evaluacion:desplegarImagen" with {'pregunta': name} %}
+                </td>
+            </tr>
+            <tr>
+                {{ form_errors(form) }}
+                {{ form_widget(form) }}
+            </tr>
+        </table>
+    </div>
+{% endspaceless %}
+{% endblock field_row %}
+
+{% block choice_widget %}
+{% spaceless %}
+    {% if expanded %}
+        <div {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            <td width="25%" align="justify">
+                 {{ form_widget(child) }}
+                 {# Fragmento cambiado para agregar la funcionalidad de mostrar imagenes #}
+                 {# { form_label(child) } #}
+                 {% render "ItsurAeiBundle:Evaluacion:desplegarImagenRespuesta" with {'pregunta': name , 'respuesta' : child.get('label') | trans}  %}
+            </td>
+            <td>
+                 <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            </td>
+        {% endfor %}
+        </div>
+    {% else %}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {% if empty_value is not none %}
+            <option value="">{{ empty_value|trans }}</option>
+        {% endif %}
+        {% if preferred_choices|length > 0 %}
+            {% set options = preferred_choices %}
+            {{ block('widget_choice_options') }}
+            {% if choices|length > 0 and separator is not none %}
+                <option disabled="disabled">{{ separator }}</option>
+            {% endif %}
+        {% endif %}
+        {% set options = choices %}
+        {{ block('widget_choice_options') }}
+    </select>
+    {% endif %}
+{% endspaceless %}
+{% endblock choice_widget %}
+
+{% block title %}
+    Evaluación
+{% endblock %}
+
+{% block body %}
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+    <table width="960" border="0" align="center">
+            <tr>
+                <td><p align="center" class="titulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p></td>
+            </tr>
+            <tr>
+            <td><table align="center">
+               <td><p align="left" class="etiquetas"> Ficha:</p></td>
+               <td><p align="left" class="preguntas">{{aspirante.ficha}}</p></td>
+               <td><p align="left" class="etiquetas">Nombre: </p></td>
+               <td><p align="left" class="preguntas">{{aspirante.nombre}}</p></td>
+            </table> </td>
+            </tr>
+    <tr>
+        <td height="20" >
+        <p align="left" class="seccion">
+        {{ grupoPreguntas.grupo.tema.seccion.area.nombre }}
+        <span class="preguntas"><img src="{{ asset('bundles/itsuraei/images/flecha.png') }}">{{ grupoPreguntas.grupo.tema.seccion.nombre }}</span>
+        <span class="preguntas"><img src="{{ asset('bundles/itsuraei/images/flecha.png') }}">{{ grupoPreguntas.grupo.tema.nombre }}</span></p>
+        </td>
+
+
+        </td>
+    </tr>
+    <tr>
+    <td>
+    <p align="justify">
+        <form action="{{ path('evaluacion_guardarGrupo',{ 'ficha':aspirante.ficha,
+                   'area':area,'seccion':seccion, 'tema':tema, 'grupo':grupo  })  }}"
+                    method="post" {{ form_enctype(form) }}>
+       {{ form_widget(form) }}
+    </p>
+      <p align="center" class="preguntas">Preguntas de {{ grupoPreguntas.grupo.tema.nombre }}
+      <span align="center" class="advertencia">{{ grupoPreguntas.grupo.preguntas.count }} </span> </p>
+    <center>
+       <input type="submit" value="continuar" class="button verde" align="center"/>
+    </center>
+    </form>
+    <br/>
+    <br/>
+    </td>
+    </tr>
+    </table>
+{% endblock %}

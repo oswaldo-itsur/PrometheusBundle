@@ -1,0 +1,33 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Nuevo Aspirante
+{% endblock %}
+
+{% block body %}
+    <tr>
+        <td>
+    <center>
+    <p class="titulos">nuevo aspirante</p>
+    <p class="instrucciones">Escribe los datos solicitados con letra mayúscula. Asegúrate de llenar todos los campos, </p>
+    <p class="instrucciones">si tienes dudas en alguno de  ellos, levanta la mano y el aplicador se acercará a asesorarte.
+ </p>
+    </td>
+    </tr>
+    <tr>
+    <td>
+        <table align="center">
+          <td>
+           <img src="{{ asset('bundles/itsuraei/images/admision4.jpg') }}"/>
+          </td>
+          <td>
+             <form action="{{ path('evaluacion_nuevo') }}" method="post" {{ form_enctype(form) }}>
+                 {{ form_widget(form) }}
+                 <br/>
+                 <input type="submit" class="button verde" />
+             </form>
+          </td>
+        </table>
+    </td>
+    </tr>
+    </center>
+{% endblock %}

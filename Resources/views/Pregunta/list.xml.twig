@@ -1,0 +1,19 @@
+{% extends 'InformaticaPrometheusBundle::layout.xml.twig' %}
+{% block body %}
+<preguntas>
+   {% for pregunta in preguntas %}
+   <pregunta>
+      <id>{{pregunta.id}}</id>
+      <año>{{pregunta.nounidad}}</año>
+      <tema>{{pregunta.tema}}</tema>
+      <año>{{pregunta.tipo}}</año>
+      <sentencia>{{pregunta.sentencia}}</sentencia>
+      <opcion1>{{pregunta.opcion1}}</opcion1>
+      <opcion2>{{pregunta.opcion2}}</opcion2>
+      <opcion3>{{pregunta.opcion3}}</opcion3>
+      <respuesta>{{pregunta.respuesta}}</respuesta>
+      <valor>{{pregunta.valor}}</valor>
+   </pregunta>
+   {% endfor %}
+</preguntas>
+{% endblock %}

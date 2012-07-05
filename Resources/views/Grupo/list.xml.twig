@@ -1,0 +1,13 @@
+{% extends 'InformaticaPrometheusBundle::layout.xml.twig' %}
+{% block body %}
+<grupos>
+   {% for grupo in grupos %}
+   <grupo>
+      <clave>{{grupo.clave}}</clave>
+      <anio>{{grupo.anio}}</anio>
+      <periodo>{{grupo.periodo}}</periodo>
+      <semestre>{{grupo.semestre}}</semestre>
+    </grupo>
+    {% endfor %}
+</grupos>
+{% endblock %}

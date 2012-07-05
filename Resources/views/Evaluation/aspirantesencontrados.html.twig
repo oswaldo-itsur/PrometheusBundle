@@ -1,0 +1,59 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Evaluación
+{% endblock %}
+
+{% block body %}
+    <tr>
+        <td>
+            <p align="center" class="titulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+            <p align="center" class="subtitulos">Los siguientes aspirantes fueron encontrados</p>
+     <table align="center" border="1" bordercolor="#D6D8D6">
+     <tr>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="preguntas">Ficha</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="preguntas">Nombre</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="preguntas">Lugar de Origen</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="preguntas">Escuela de Procedencia</p>
+         </th>
+     </tr>
+     {% for aspirante in aspirantes %}
+            <tr>
+                <td>
+                    <p align="center" class="opciones">{{aspirante.ficha}}</p>
+                </td>
+                 <td>
+                    <p align="left" class="opciones">{{aspirante.nombre}} </p>
+                </td>
+                <td>
+                    <p align="left" class="opciones">{{aspirante.lugarOrigen}} </p>
+                </td>
+                <td>
+                    <p align="left" class="opciones">{{aspirante.escuelaProcedencia}} </p>
+                </td>
+            </tr>
+    {% else %}
+        <tr>
+            <p align="center"> <img src="{{ asset('bundles/itsuraei/images/error.png') }}"/></p>
+            <p class="advertencia">No se encontraron aspirantes.</p>
+        </tr>
+    {% endfor %}
+    </table>
+    <br/>
+    <br/>
+    <center>
+     <a href="{{ path('evaluacion_identificacion') }}" class="button verde">
+        ir a Identificación
+    </a>
+    </center>
+    <br/>
+    <br/>
+            </td>
+    </tr>
+{% endblock %}

@@ -1,0 +1,8 @@
+[{% for docente in docentes %}
+ 
+ {"clave":"{{docente.clave}}",
+   "nombre":"{{docente.nombre}}",
+   "usuario":"{{docente.usuario}}"
+ },
+{% endfor %}
+]

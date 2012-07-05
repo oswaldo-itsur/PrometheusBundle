@@ -42,6 +42,15 @@ class HojaRespuestas
      */
     protected $examen;
     
+         
+     /**
+     *
+     * @ORM\ManyToOne(targetEntity="Alumno")
+     * @ORM\JoinColumn(name="alumno_id", referencedColumnName="id")
+     */
+    protected $alumno;
+    
+    
     /**
      *
      * @ORM\OneToMany(targetEntity="PreguntaEvaluable", mappedBy="hoja", cascade={"persist", "merge"})
@@ -122,6 +131,26 @@ class HojaRespuestas
     public function getExamen()
     {
         return $this->examen;
+    }
+    
+    /**
+     * Set alumno
+     *
+     * @param Informatica\PrometheusBundle\Entity\Alumno $alumno
+     */
+    public function setAlumno(\Informatica\PrometheusBundle\Entity\Alumno $alumno)
+    {
+        $this->alumno = $alumno;
+    }
+
+    /**
+     * Get alumno
+     *
+     * @return Informatica\PrometheusBundle\Entity\Alumno 
+     */
+    public function getAlumno()
+    {
+        return $this->alumno;
     }
 
     /**

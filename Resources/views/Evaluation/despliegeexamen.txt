@@ -1,0 +1,57 @@
+ 
+    <br/>
+    <br/>
+    Parte del examen
+    <br/>
+    {{hoja.manual.id}}
+    <br/>
+    {{hoja.manual.clave}}
+    <br/>
+    {{hoja.manual.nombre}}
+    <br/>
+    Areas
+    <br/>
+    {% for area in hoja.manual.areas %}
+        {{ area.nombre }}
+        <br/>
+    {% else %}
+        <li>No tiene areas</li>
+    {% endfor %}
+
+     <br/>
+    Areas Evaluables
+    <br/>
+    {% for area in hoja.areas %}
+        {{ area.orden }} {{ area.area.nombre }}
+        <br/>
+        {% for seccion in area.secciones %}
+            {{ seccion.orden }}  {{ seccion.seccion.nombre }}
+                <br/>
+                {% for tema in seccion.temas %}
+                    {{ tema.orden }}  {{ tema.tema.nombre }}
+                      <br/>
+                      {% for grupo in tema.grupos %}
+                         {{ grupo.orden }}  {{ grupo.grupo.instrucciones }}
+                           <br/>
+                           {% for pregunta in grupo.preguntas %}
+                             {{ pregunta.orden }}  {{ pregunta.pregunta.sentencia }}
+                                <br/>
+                             {% else %}
+                                <li>No tiene preguntas</li>
+                             {% endfor %}
+                        {% else %}
+                            <li>No tiene grupos</li>
+                        {% endfor %}
+                    {% else %}
+                       <li>No tiene temas</li>
+                {% endfor %}
+
+            {% else %}
+                <li>No tiene secciones</li>
+        {% endfor %}
+
+    {% else %}
+        <li>No tiene areas</li>
+    {% endfor %}
+                </td>
+    </tr>

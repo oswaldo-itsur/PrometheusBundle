@@ -91,16 +91,7 @@ class Examen
      * @ORM\ManyToOne(targetEntity="Docente",inversedBy="docentes")
      * @ORM\JoinColumn(name="docente_id", referencedColumnName="id")
      */
-     private $docente;
-     
-     
-     /**
-     *
-     * @ORM\ManyToOne(targetEntity="Alumno")
-     * @ORM\JoinColumn(name="alumno_id", referencedColumnName="id")
-     */
-    protected $alumno;
-     
+     private $docente;     
      
       /**
      *
@@ -326,25 +317,7 @@ class Examen
         return $this->docente;
     }
 
-    /**
-     * Set alumno
-     *
-     * @param Informatica\PrometheusBundle\Entity\Alumno $alumno
-     */
-    public function setAlumno(\Informatica\PrometheusBundle\Entity\Alumno $alumno)
-    {
-        $this->alumno = $alumno;
-    }
-
-    /**
-     * Get alumno
-     *
-     * @return Informatica\PrometheusBundle\Entity\Alumno 
-     */
-    public function getAlumno()
-    {
-        return $this->alumno;
-    }
+    
 
     /**
      * Add preguntas

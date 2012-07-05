@@ -1,0 +1,18 @@
+{% extends 'InformaticaPrometheusBundle::layout.xml.twig' %}
+{% block body %}
+<examenes>
+   {% for examen in examenes %}
+   <examen>
+      <id>{{examen.id}}</id>
+      <año>{{examen.anio}}</año>
+      <periodo>{{examen.periodo}}</periodo>
+      <nounidad>{{examen.nounidades}}</nounidad>
+      <nombreunidad>{{examen.nombreunidad}}</nombreunidad>
+      <opcion>{{examen.opcion}}</opcion>
+      <fecha>{{examen.fecha.format('d/m/Y')}}</fecha>
+      <hora>{{examen.hora.format('G:i')}}</hora>
+      <ponderacion>{{examen.ponderacion}}</ponderacion>
+   </examen>
+   {% endfor %}
+</examenes>
+{% endblock %}

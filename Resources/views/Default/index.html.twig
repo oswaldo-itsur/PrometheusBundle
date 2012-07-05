@@ -1,4 +1,6 @@
-{% for carrera in carreras  %}
-{{ carrera }}
-<br/>
-{% endfor %}
+{# Only get the chart #}
+{% set chart = leg_google_charts_get('InformaticaPrometheusBundle:ExampleChart.yml') %}
+{{ leg_google_charts_build(chart) }}
+{# Display the chart #}
+{{ leg_google_charts_render('InformaticaPrometheusBundle:ExampleChart.yml') }}
+

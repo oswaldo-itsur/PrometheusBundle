@@ -1,0 +1,45 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+
+{% block titulo %}
+{% trans %}exams.title{% endtrans %}
+{% endblock %}
+
+{% block body %}
+    <h2>{% trans %}exams.title{% endtrans %}</h2>
+    <br/>
+    <table border="1">
+        <tr>
+            <th>{% trans %}exams.key{% endtrans %}</th>
+            <th>{% trans %}exams.year{% endtrans %}</th>
+            <th>{% trans %}exams.period{% endtrans %}</th>
+            <th>{% trans %}exams.unitsumber{% endtrans %}</th>
+            <th>{% trans %}exams.unitname{% endtrans %}</th>
+            <th>{% trans %}exams.option{% endtrans %}</th>
+            <th>{% trans %}exams.date{% endtrans %}</th>
+            <th>{% trans %}exams.time{% endtrans %}</th>
+            <th>{% trans %}exams.value{% endtrans %}</th>
+            <th>{% trans %}titles.operations{% endtrans %}</th>
+        </tr>
+        {% for examen in examenes %}
+            <tr>
+                <td>{{examen.id}}</td>
+                <td>{{examen.anio}}</td>
+                <td>{{examen.periodo}}</td>
+                <td>{{examen.nounidades}}</td>
+                <td>{{examen.nombreunidad}}</td>
+                <td>{{examen.opcion}}</td>
+                <td>{{examen.fecha.format('d/m/Y')}}</td>
+                <td>{{examen.hora.format('G:i')}}</td>
+                <td>{{examen.ponderacion}}</td>
+                <td>
+                   <a href="{{path('examen_update',{'id':examen.id} ) }}">{% trans %}titles.update{% endtrans %}</a>
+                   |
+                   <a href="{{path('examen_remove',{'id':examen.id} ) }}">{% trans %}titles.remove{% endtrans %}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr><td colspan="10" align="right"><a href="{{path('examen_new') }}">{% trans %}exams.new{% endtrans %}</a></td></tr>
+    </table>
+
+
+{% endblock %}
