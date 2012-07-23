@@ -173,4 +173,9 @@ class Alumno
         return $this->contrasena;
     }
     
+    public function __toString()
+    {
+       return 'Alumno['. $this->id.', '.$this->nocontrol.  ']';
+    }
+    
 }

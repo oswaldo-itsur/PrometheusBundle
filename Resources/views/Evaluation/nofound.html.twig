@@ -1,0 +1,13 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+{% block title %}
+    {% trans %}evaluations.title{% endtrans %}
+{% endblock %}
+{% block body %}
+    <center>
+    <p>Número de control y/o contraseña incorrectos</p>
+    <br/>
+    <a href="{{ path('evaluation_identification') }}">
+        Back
+    </a>
+    </center>
+{% endblock %}

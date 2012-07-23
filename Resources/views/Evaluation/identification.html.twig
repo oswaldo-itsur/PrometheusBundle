@@ -1,0 +1,16 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+{% block title %}
+    {% trans %}evaluations.title{% endtrans %}
+{% endblock %}
+{% block body %}
+        <center>
+
+           <form action="{{ path('evaluation_identification') }}" method="post">
+              {{ form_enctype(form) }}
+              {{ form_widget(form) }}
+              <br/>
+              <br/>
+              <input type="submit" />
+           </form>
+        </center>
+{% endblock %}

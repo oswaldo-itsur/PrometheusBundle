@@ -1,0 +1,67 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+
+{% block title %}
+    Evaluación
+{% endblock %}
+
+{% block body %}
+No control: {{alumno.nocontrol}}
+<br/>
+Nombre Alumno: {{alumno.nombre}}
+<br/>   
+Fecha: {{hoja.examen.fecha.format('d-m-Y')}}
+<br/> 
+Fecha: {{hoja.examen.hora.format('G:i')}}
+<br/> 
+Nombre unidad: {{hoja.examen.nombreunidad}}
+<br/> 
+Unidad: {{hoja.examen.nounidades}}
+<br/> 
+Opcion: {{hoja.examen.opcion}}
+<br/> 
+Ponderacion: {{hoja.examen.ponderacion}}
+<br/> 
+Periodo: {{hoja.examen.periodo}}
+<br/> 
+año: {{hoja.examen.anio}}
+<br/>
+Materia: {{hoja.examen.asignatura.nombre}}
+<br/>
+Materia: {{hoja.examen.asignatura.carrera}}
+<br/>
+Docente: {{hoja.examen.docente.nombre}}
+<br/>
+Numero de Preguntas: {{ hoja.preguntas.count }}
+<br/>
+<br/>
+<br/>
+{% for pregunta in hoja.preguntas %}
+   {{pregunta.orden}}
+   |
+   {{pregunta.pregunta.sentencia}}
+   |
+   {{pregunta.pregunta.opcion1}}
+   |
+   {{pregunta.pregunta.opcion2}}
+   |
+   {{pregunta.pregunta.opcion3}}
+   
+   |
+   {{pregunta.pregunta.respuesta}}
+   |
+   {{pregunta.respuesta}}
+   |
+   {{pregunta.valor}}
+    <br/>
+{% endfor %}
+
+<br/>
+<br/>
+Calificacion: {{hoja.calificacion}} 
+<br/>
+<br/>
+<a href="{{ path('evaluation_close')}}">
+        Cerrar Session
+</a>
+
+{% endblock %}

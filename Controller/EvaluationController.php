@@ -12,12 +12,15 @@ use Informatica\PrometheusBundle\Entity\HojaRespuestas;
 use Informatica\PrometheusBundle\Entity\PreguntaEvaluable;
 use Informatica\PrometheusBundle\Entity\Alumno;
 use Informatica\PrometheusBundle\Form\AlumnoType;
-use Informatica\PrometheusBundle\Entity\Utilerias;
+use Informatica\PrometheusBundle\Form\HojaRespuestasType;
+use Informatica\PrometheusBundle\Entity\Utilities;
 
 
 
 
 /**
+ * 
+ *
  * @Route("/evaluation")
  */
 class EvaluationController extends Controller
@@ -47,7 +50,8 @@ class EvaluationController extends Controller
         $defaultData = array('aplicador' => 'Escribe el nombre el aplicador');
 
         $form = $this->createFormBuilder($defaultData)
-        ->add('ficha', 'integer')
+        ->add('nocontrol', 'text',array('label'=>'No Control'))
+        ->add('password', 'text',array('label'=>'Contrasena'))
         ->add('aplicador', 'text')
         ->getForm();
 
@@ -55,188 +59,142 @@ class EvaluationController extends Controller
             $form->bindRequest($request);
 
             $data = $form->getData();
-            $ficha =  $data['ficha'];
+            $nocontrol =  $data['nocontrol'];
+            $password =  $data['password'];
             $aplicador = $data['aplicador'];
             
-            //$periodo = $this->container->getParameter('periodo.actual');
-            $aspirante = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Aspirante')
-            ->findByPeriodoAndFicha($this->periodo->getId(), $ficha);
-
-            if($aspirante)
+            $alumno = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Alumno')
+            ->findOneByNocontrol($nocontrol);
+            if($alumno) 
             {
-                 return $this->redirect($this->generateUrl('evaluation_confirmacion',
-                     array('ficha' => $ficha,
-                     'aplicador' => $aplicador)));
+                 if( $password == $alumno->getContrasena() ) 
+                 {
+                      $session = $this->getRequest()->getSession();
+                      $session->start();
+                      $session->set('nocontrol', $alumno->getNocontrol());
+                      
+                      return $this->redirect($this->generateUrl('evaluation_instruccions'));
+                 }else
+                  {
+                      return $this->render('InformaticaPrometheusBundle:Evaluation:nofound.html.twig',
+                         array('nocontrol'=> $nocontrol,
+                         ));
+                  } 
             }else
             {
-                return $this->render('InformaticaPrometheusBundle:Evaluation:noencontrado.html.twig',
-                    array('ficha'=> $ficha,
-                         'periodo'=>$this->periodo,
+                return $this->render('InformaticaPrometheusBundle:Evaluation:nofound.html.twig',
+                    array('nocontrol'=> $nocontrol,
                     ));
             }
 
         }
         
-        return $this->render('InformaticaPrometheusBundle:Evaluation:identificacion.html.twig',
+        return $this->render('InformaticaPrometheusBundle:Evaluation:identification.html.twig',
         array(
             'form'=> $form->createView(),
-            'periodo'=>$this->periodo,
         ));
     }
     
-    /**
-     * @Route("/confirmacion/{ficha}/{aplicador}", name="evaluation_confirmacion")
-     * @Template()
-     */
-    public function confirmacionAction($ficha, $aplicador)
-    {
-
-         $id = $this->container->getParameter('periodo.actual');
-         $this->periodo = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Periodo')
-        ->find($id);
-        
-         $aspirante = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Aspirante')
-         ->findByPeriodoAndFicha($this->periodo->getId(), $ficha);
-
-         if($aspirante)
-         {
-                 return $this->render('InformaticaPrometheusBundle:Evaluation:confirmacion.html.twig',
-                 array(
-                    'periodo'=> $this->periodo,
-                    'aspirante'=> $aspirante,
-                    'aplicador'=> $aplicador,
-                ));
-         }
-
-
-
-    }
-    
-
     
     /**
-     * @Route("/instrucciones/{ficha}/{aplicador}", name="evaluation_instrucciones")
+     * @Route("/evaluation_instruccions", name="evaluation_instruccions")
      * @Template()
      */
-    public function instruccionesAction($ficha, $aplicador)
+    public function instruccionsAction()
     {
-         $id = $this->container->getParameter('periodo.actual');
-         $this->periodo = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Periodo')
-        ->find($id);
-        
-         $aspirante = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Aspirante')
-         ->findByPeriodoAndFicha($this->periodo->getId(), $ficha);
-         
-        if($aspirante->getHoja()){
-            return $this->render('InformaticaPrometheusBundle:Evaluation:evaluationprevia.html.twig',
-                array(
-                    'aspirante'=>$aspirante,
-                    'periodo'=> $this->periodo,
-                ));
-        }
-       
-        if($aspirante)
+         $session = $this->getRequest()->getSession();
+         $nocontrol = $session->get('nocontrol');
+         $alumno = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Alumno')
+            ->findOneByNocontrol($nocontrol);
+        if($alumno)
         {
-             $session = $this->getRequest()->getSession();
-             $session->start();
-
-             $manual = $id = $this->container->getParameter('manual.clave');
-
-             $hoja = HojaRespuestasFactory::getHojaRespuestas($manual, $this->getDoctrine());
-             $hoja->setAplicador($aplicador);
-             $hoja->setAspirante($aspirante);
+             $hoja = HojaRespuestasFactory::getHojaRespuestas(1, $this->getDoctrine());
+                          
              $hoja->setFecha( new \DateTime());
              $hoja->setCalificacion(0);
-             $hoja->setPeriodo($this->periodo);
-             $aspirante->setHoja($hoja);
+             $hoja->setAlumno($alumno);
 
              $em = $this->getDoctrine()->getEntityManager();
              $em->persist($hoja);
              $em->flush();
-             $session->set('aspirante', $aspirante);
-                 
-             return $this->render('InformaticaPrometheusBundle:Evaluation:instrucciones.html.twig',
+             
+             $session->set('activeexamen', true);
+             $session->set('hojaid', $hoja->getId());
+             
+              
+             return $this->render('InformaticaPrometheusBundle:Evaluation:instruccions.html.twig',
                 array(
-                    'aspirante'=>$aspirante,
-                    'periodo'=> $this->periodo,
-                    'hoja'=> $hoja,
-                    'area' =>1,
-                    'seccion' =>1,
-                    'tema' =>1,
-                    'grupo' =>1,
+                    'alumno'=>$alumno,
+                    //'hoja'=> $hoja,
                 ));
         }
         else
         {
-            return $this->redirect($this->generateUrl('evaluation_identificacion',array('periodo'=> $this->periodo)));
+            return $this->redirect($this->generateUrl('evaluation_identification'));
         }
         
     }
     
     /**
-     * @Route("/grupoPreguntas/{ficha}/{area}/{seccion}/{tema}/{grupo}", name="evaluation_grupo")
+     * @Route("/viewExam", name="evaluation_viewExam")
      * @Template()
      */
-    public function grupoAction(Request $request, $ficha,$area,$seccion,$tema,$grupo)
+    public function viewExamAction(Request $request)
     {
-       $id = $this->container->getParameter('periodo.actual');
-       $this->periodo = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Periodo')
-        ->find($id);
-        
+
        $session = $this->getRequest()->getSession();
-       $aspirante = $session->get('aspirante');
-       if($aspirante)
+       $nocontrol = $session->get('nocontrol');
+       $alumno = null;
+       if($nocontrol)
+       {
+           $alumno = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Alumno')
+              ->findOneByNocontrol($nocontrol);
+       }     
+       if($alumno)
         {
-            $repository = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:GrupoEvaluable');
-            $grupoPreguntas =  $repository->findByPeriodoAndFichaAndAreaAndSeccionAndTemaAndOrder($id,
-                              $ficha, $area, $seccion, $tema, $grupo);
-
-            if($grupoPreguntas)
+            $hojaid =  $session->get('hojaid');
+            $active = $session->get('activeexamen');
+            
+            $hoja = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:HojaRespuestas')
+            ->find($hojaid);
+            
+            
+            if($hoja && $active)
             {
-              /*
-                if($grupoPreguntas->getPreguntas()->count() <= 0 ){
-                    $siguientes = Utilerias::grupoSiguiente($this->getDoctrine(), $id, $aspirante->getFicha(), $area, $seccion, $tema, $grupo);
-
-                    //Mostrar el siguiente grupo de preguntas
-                    return $this->redirect($this->generateUrl('evaluation_grupo' ,
-                    array(
-                        'ficha'=>$aspirante->getFicha(),
-                        'area' =>$siguientes['area'],
-                        'seccion' => $siguientes['seccion'],
-                        'tema' => $siguientes['tema'],
-                        'grupo' => $siguientes['grupo'],
-                       ))
-                    );
-                }
-                 */
-                $formBuilder = new GrupoType();
-                $formBuilder->setGrupoPreguntas($grupoPreguntas);
+                $formBuilder = new HojaRespuestasType();
+                $formBuilder->setHojaRespuestas($hoja);
                 $form = $this->createForm($formBuilder);
-				$hoja = $grupoPreguntas->getTema()->getSeccion()->getArea()->getHoja();
                 
-                return $this->render('InformaticaPrometheusBundle:Evaluation:grupo.html.twig',
+                if ($request->getMethod() == 'POST') {
+                    $form->bindRequest($request);
+                    $data = $form->getData();
+                    
+                    foreach($hoja->getPreguntas() as $pregunta => $valor){
+                        $valor->setRespuesta($data[$valor->getId()]);
+                    }
+                    
+                    $hoja->evaluar();
+                    //Aqui actualizamos la bd con las repuestas
+                    $em = $this->getDoctrine()->getEntityManager();
+                    $em->merge($hoja);
+                    $em->flush();
+                    
+                     $session->set('activeexamen', false);
+                     $session->set('hojaid', $hoja->getId());
+                    return $this->redirect($this->generateUrl('evaluation_results'));
+                }
+                return $this->render('InformaticaPrometheusBundle:Evaluation:viewExam.html.twig',
                     array(
                         'form'=> $form->createView(),
-                        'aspirante'=>$aspirante,
-                        'periodo'=> $this->periodo,
-                        'grupoPreguntas'=> $grupoPreguntas,
-                        'area' =>$area,
-                        'seccion' =>$seccion,
-                        'tema' =>$tema,
-                        'grupo' =>$grupo,
+                        'alumno'=>$alumno,
 						'hoja' => $hoja,
                     )
                 );
             }else{
-                 return $this->render('InformaticaPrometheusBundle:Evaluation:gruponoencontrado.html.twig',
+                 return $this->render('InformaticaPrometheusBundle:Evaluation:examNoFound.html.twig',
                     array(
-                        'aspirante'=>$aspirante,
+                        'alumno'=>$alumno,
                         'periodo'=> $this->periodo,
-                        'area' =>$area,
-                        'seccion' =>$seccion,
-                        'tema' =>$tema,
-                        'grupo' =>$grupo,
-						'hoja' => $hoja,
                     )
                 );
             }
@@ -245,294 +203,68 @@ class EvaluationController extends Controller
          }
         else
         {
-            return $this->redirect($this->generateUrl('evaluation_identificacion',array('periodo'=> $this->periodo)));
+            return $this->redirect($this->generateUrl('evaluation_identification'));
         }
     }
     
     /**
-     * @Route("/despedida/{ficha}}", name="evaluation_despedida")
+     * @Route("/resultados/", name="evaluation_results")
      * @Template()
      */
-    public function despedidaAction($ficha)
+    public function resultsAction(Request $request)
     {
-        //Se recupera el periodo actual.
-        $id = $this->container->getParameter('periodo.actual');
-        $this->periodo = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Periodo')
-        ->find($id);
-        
-        //Recuperamos de la session el aspirante que esta contestando la pregunta
         $session = $this->getRequest()->getSession();
-        $aspirante = $session->get('aspirante');
+        $nocontrol = $session->get('nocontrol');
+       
+        $alumno = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Alumno')
+           ->findOneByNocontrol($nocontrol);
         
-        if($aspirante)
+        if($alumno)
         {
-            //Recperamos la hoja de respuestas del aspirante actual.
-            $repository = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:HojaRespuestas');
-            $hoja =  $repository->findByPeriodoAndFicha($id, $ficha);
-
-            //Calculamos la calificacion de la hoja
-            $aspirante->setHoja($hoja);
-            $hoja->evaluar();
-        
-            //Aqui actualizamos toda la hoja para que se guarde la calificacion
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->merge($hoja);
-            $em->flush();
-        
-            //Aqui actualizamos el aspirante.
-            $em->merge($aspirante);
-            $em->flush();
-        
-            //Mostramos el mensaje de despedida del examen.
-            return $this->render('InformaticaPrometheusBundle:Evaluation:despedida.html.twig',
+            $hojaid =  $session->get('hojaid');
+            $hoja = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:HojaRespuestas')
+            ->find($hojaid);
+            
+            if($hoja)
+            {  
+               return $this->render('InformaticaPrometheusBundle:Evaluation:results.html.twig',
                     array(
-                        'aspirante'=>$aspirante,
-                        'periodo'=> $this->periodo,
+                        'alumno'=>$alumno,
                         'hoja'=> $hoja,
                     )
                 );
-       }
-       else
-       {
-            return $this->redirect($this->generateUrl('evaluation_identificacion',array('periodo'=> $this->periodo)));
-       }
+            }
+            else
+            {
+                return $this->redirect($this->generateUrl('evaluation_identification'));
+            }                       
+        }
+        else
+        {
+            return $this->redirect($this->generateUrl('evaluation_identification'));
+        }
     }
     
-    
-    
+        
     /**
-     * @Route("/terminar}", name="evaluation_finalizar")
+     * @Route("/close}", name="evaluation_close")
      * @Template()
      */
-    public function finalizarAction()
+    public function closeAction()
     {
        $session = $this->getRequest()->getSession();
-       $aspirante = $session->get('aspirante');
-       if($aspirante)
+       $nocontrol = $session->get('nocontrol');
+       if($nocontrol)
        {
            $session->save();
-           $aspirante = $session->set('aspirante',null);
-           return $this->redirect($this->generateUrl('evaluation_identificacion'));
+           $session->set('nocontrol', null);
+           $session->set('activeexamen', null);
+           $session->set('hojaid', null);
        }
-       else
-       {
-            return $this->redirect($this->generateUrl('evaluation_identificacion',array('periodo'=> $this->periodo)));
-       }
+       return $this->redirect($this->generateUrl('evaluation_identification'));
 
     }
     
-    /**
-     * @Route("/nuevo", name="evaluation_nuevo")
-     * @Template()
-     */
-    public function nuevoAction(Request $request)
-    {
-         $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Periodo')->find($id);
-
-        $aspirante = new Aspirante();
-        $aspirante->setPeriodo($periodo);
-
-        $form = $this->createForm(new AspiranteType(), $aspirante);
-
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
-
-            if ($form->isValid()) {
-
-                $em->persist($aspirante);
-                $em->flush();
-                return $this->redirect($this->generateUrl('evaluation_identificacion'));
-            }
-
-        }
-
-        return $this->render('InformaticaPrometheusBundle:Evaluation:nuevoAspirante.html.twig',array(
-        'form'=> $form->createView(),
-        ));
-    }
-    
-
-    /**
-     * @Route("/guardarRespuestas/{ficha}/{area}/{seccion}/{tema}/{grupo}", name="evaluation_guardarGrupo")
-     * @Template()
-     */
-    public function guardarGrupoAction(Request $request, $ficha,$area,$seccion,$tema,$grupo)
-    {
-        $id = $this->container->getParameter('periodo.actual');
-        $this->periodo = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Periodo')
-        ->find($id);
-
-        $session = $this->getRequest()->getSession();
-        $aspirante = $session->get('aspirante');
-        if($aspirante)
-        {
-            $repository = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:GrupoEvaluable');
-            $grupoPreguntas =  $repository->findByPeriodoAndFichaAndAreaAndSeccionAndTemaAndOrder($id,
-                              $ficha, $area, $seccion, $tema, $grupo);
-                              
-            $formBuilder = new GrupoType();
-            $formBuilder->setGrupoPreguntas($grupoPreguntas);
-            $form = $this->createForm($formBuilder);
-            
-            if ($request->getMethod() == 'POST') {
-                $form->bindRequest($request);
-                $data = $form->getData();
-
-                 foreach($grupoPreguntas->getPreguntas() as $pregunta => $valor){
-
-                     $valor->setRespuesta($data[$valor->getId()]);
-                     $elejida =  $data[$valor->getId()];
-                     $real = $valor->getPregunta()->getRespuesta();
-                     $valor->setContestada(true);
-                 }
-                 
-                 //Se marca le grupo como contestado.
-                 $grupoPreguntas->setContestada(true);
-
-                //Se actualiza la bd con las respuestas.
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->merge($grupoPreguntas);
-                $em->flush();
-                
-
-                $siguientes = Utilerias::grupoSiguiente($this->getDoctrine(), $id, $aspirante->getFicha(), $area, $seccion, $tema, $grupo);
-
-                //¿Hubo cambio de tema?
-                if($siguientes['cambiotema']){
-                    //Marcar como contestado y actualizar la bd.
-                    $temaev = $grupoPreguntas->getTema();
-                    $temaev->setContestada(true);
-                    $em->merge($temaev);
-                    $em->flush();
-                }
-                
-                //¿Hubo cambio de seccion?
-                if($siguientes['cambioseccion']){
-                    //Marcar como contestado y actualizar la bd.
-                    $seccionev = $temaev->getSeccion();
-                    $seccionev->setContestada(true);
-                    $em->merge($seccionev);
-                    $em->flush();
-                }
-                
-                //¿Hubo cambio de area?
-                if($siguientes['cambioarea']){
-                    //Marcar como contestado y actualizar la bd.
-                    $areaev = $seccionev->getArea();
-                    $areaev->setContestada(true);
-                    $em->merge($areaev);
-                    $em->flush();
-                }
-                
-                //¿Se llego al final del examen?
-                if($siguientes['final']){
-                   //Redirijir a la despedida
-                   return $this->redirect($this->generateUrl('evaluation_despedida' ,
-                    array(
-                        'ficha'=>$aspirante->getFicha(),
-                    )));
-                }
-                
-                //Mostrar el siguiente grupo de preguntas
-                return $this->redirect($this->generateUrl('evaluation_grupo' ,
-                    array(
-                        'ficha'=>$aspirante->getFicha(),
-                        'area' =>$siguientes['area'],
-                        'seccion' => $siguientes['seccion'],
-                        'tema' => $siguientes['tema'],
-                        'grupo' => $siguientes['grupo'],
-                    ))
-                );
-             }
-        }
-        else
-        {
-            return $this->redirect($this->generateUrl('evaluation_identificacion',array('periodo'=> $this->periodo)));
-        }
-    }
-    
-    /**
-     * @Route("/reiniciar/{ficha}}", name="evaluation_reiniciar")
-     * @Template()
-     */
-    public function reiniciarAction($ficha)
-    {
-         $id = $this->container->getParameter('periodo.actual');
-         $this->periodo = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Periodo')
-        ->find($id);
-
-         $aspirante = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Aspirante')
-         ->findByPeriodoAndFicha($this->periodo->getId(), $ficha);
-
-        if($aspirante)
-        {
-             $session = $this->getRequest()->getSession();
-             $session->start();
-             $session->set('aspirante', $aspirante);
-             $hoja = $aspirante->getHoja();
-
-             return $this->render('InformaticaPrometheusBundle:Evaluation:instrucciones.html.twig',
-                array(
-                    'aspirante'=>$aspirante,
-                    'periodo'=> $this->periodo,
-                    'hoja'=> $hoja,
-                    'area' =>1,
-                    'seccion' =>1,
-                    'tema' =>1,
-                    'grupo' =>1,
-                ));
-        }
-        else
-        {
-            return $this->redirect($this->generateUrl('evaluation_identificacion',array('periodo'=> $this->periodo)));
-        }
-    }
-    
-    
-    /**
-     * @Route("/buscar}", name="evaluation_buscar")
-     * @Template()
-     */
-    public function buscarAction(Request $request)
-    {
-         $id = $this->container->getParameter('periodo.actual');
-         $this->periodo = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Periodo')
-        ->find($id);
-
-
-        $defaultData = array('aplicador' => 'Escribe el nombre el aplicador');
-
-        $form = $this->createFormBuilder($defaultData)
-        ->add('nombre', 'text')
-        ->getForm();
-
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
-
-            $data = $form->getData();
-            $nombre =  $data['nombre'];
-
-            //$periodo = $this->container->getParameter('periodo.actual');
-            $aspirantes = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Aspirante')
-            ->findByPeriodoAndNombre($this->periodo->getId(), $nombre);
-
-            return $this->render('InformaticaPrometheusBundle:Evaluation:aspirantesencontrados.html.twig',
-                     array(
-                         'aspirantes' => $aspirantes,
-                         'periodo' => $this->periodo,
-                     ));
-
-        }
-
-        return $this->render('InformaticaPrometheusBundle:Evaluation:buscar.html.twig',
-        array(
-            'form'=> $form->createView(),
-            'periodo'=>$this->periodo,
-        ));
-
-    }
     
     public function desplegarImagenAction($pregunta)
     {

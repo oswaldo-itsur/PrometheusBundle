@@ -34,7 +34,7 @@ class PreguntaEvaluable
     /**
      * @var text $respuesta
      *
-     * @ORM\Column(name="respuesta", type="text")
+     * @ORM\Column(name="respuesta", type="text", nullable="true")
      */
     private $respuesta;
     
@@ -171,5 +171,21 @@ class PreguntaEvaluable
     public function getValor()
     {
         return $this->valor;
+    }
+    
+    /**
+     * Get a calification
+     *
+     * @return a integer
+     */
+    public function evaluar() {
+        $acierto = 0;
+        $elejida =  $this->getRespuesta();
+        $correcta = $this->pregunta->getRespuesta();
+
+        if( $elejida == $correcta ){
+          $acierto = 1;
+        }
+        return $acierto * $this->pregunta->getValor();
     }
 }

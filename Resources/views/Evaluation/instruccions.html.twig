@@ -1,0 +1,18 @@
+{% extends 'InformaticaPrometheusBundle::layout.html.twig' %}
+{% block title %}
+    {% trans %}evaluations.title{% endtrans %}
+{% endblock %}
+
+{% block body %}
+<center>
+
+    <p align="center" class="advertencia">Instrucciones Generales.</p>
+
+     <p class="instrucciones" align="justify"> El tiempo requerido para contestar el examen es de 50 min.</p>
+      
+<a href="{{ path('evaluation_viewExam')}}">
+        Continue
+</a>
+</center>
+
+{% endblock %}

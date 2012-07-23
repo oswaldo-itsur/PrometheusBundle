@@ -3,6 +3,9 @@
 namespace Informatica\PrometheusBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Informatica\PrometheusBundle\Entity\Examen;
+use Informatica\PrometheusBundle\Entity\Pregunta;
+use Informatica\PrometheusBundle\Entity\PreguntaEvaluable;
 
 /**
  * Informatica\PrometheusBundle\Entity\HojaRespuestas
@@ -171,5 +174,39 @@ class HojaRespuestas
     public function getPreguntas()
     {
         return $this->preguntas;
+    }
+    
+    
+    /**
+     *Crea las PreguntaEvalubles del GrupoEvaluable
+     *
+     */
+    public function crearPreguntas(){
+        $posiciones = Utilities::randomOrder($this->getExamen()->getPreguntas()->count());
+        $posicion = 0;
+
+        foreach($this->getExamen()->getPreguntas() as $pregunta =>$valor){
+
+          $pe = new PreguntaEvaluable();
+          $pe->setOrden($posiciones[$posicion]);
+          $pe->setHoja($this);
+          $pe->setPregunta($valor);
+          $pe->setRespuesta('');
+          $pe->setValor($valor->getValor());
+          $posicion++;
+          $this->addPreguntaEvaluable($pe);
+        }
+
+    }
+    
+    public function evaluar(){
+       $this->calificacion = 0;
+
+       foreach($this->preguntas as $pregunta){
+           $this->calificacion = $this->calificacion + $pregunta->evaluar();
+       }
+
+       return $this->calificacion;
+    
     }
 }

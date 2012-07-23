@@ -8,13 +8,14 @@
     <parameters>
         <parameter key="informatica_prometheus.example.class">Informatica\PrometheusBundle\Example</parameter>
     </parameters>
-
+    
     <services>
         <service id="informatica_prometheus.example" class="%informatica_prometheus.example.class%">
             <argument type="service" id="service_id" />
             <argument>plain_value</argument>
             <argument>%parameter_name%</argument>
         </service>
+        
     </services>
     -->
 </container>
