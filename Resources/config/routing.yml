@@ -33,3 +33,7 @@ _prometheus_preguntas:
 _prometheus_evaluations:
     resource: "@InformaticaPrometheusBundle/Controller/EvaluationController.php"
     type:     annotation
+    
+_prometheus_ajax:
+    resource: "@InformaticaPrometheusBundle/Controller/AjaxController.php"
+    type:     annotation
