@@ -1,6 +1,5 @@
-<?php
-
-namespace Informatica\PrometheusBundle\Controller;
+<?php  
+ namespace Informatica\PrometheusBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -114,3 +113,4 @@ class DocenteController extends Controller
       return array('mensaje'=>'exito');
     }
 }
+?>
