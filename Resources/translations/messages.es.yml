@@ -1,5 +1,73 @@
+app:
+   name: Prometheus
+   version: Version 1.0
+   credits: Creado por: Eduardo, Ozwaldo, Hugo
+   
+titles:
+   operations: Operaciones
+   update: Actualizar
+   remove: Eliminar
+
 welcome:
-    welcome: Bienvenido
-    version: versión
-    date.time: Fecha
+   welcome: Bienvenido
+   date.time: Fecha
+    
+groups:
+   title: Lista de Grupos
+   key: Clave
+   year: Año
+   period: Periodo
+   semester: Semestre
+    
+asigments:
+   title: Lista de Asignaturas
+   key: Clave
+   name: Nombre
+   carrera: Carrera
+    
+students:
+   title: Lista de Alumnos
+   matriculate: Matricula
+   name: Nombre
+   mail: E-Mail
+   
+teachers:
+   title: Lista de Maestros
+   key: Clave
+   name: Nombre
+   user: Usuario
+   
+exams:
+   title: Exam's List
+   new: New Exam
+   key: Key
+   date: Date
+   time: Time
+   unitsumber: Units Number
+   unitname: Unit's Name
+   option: Option
+   value: Value
+   period: Period
+   year: Year
+   
+questions:
+   title: Bank of Questions
+   new: New Question
+   id: Id
+   type: Type
+   statement: Statement
+   option1: Option 1
+   option2: Option 2
+   option3: Option 3
+   answer: Answer
+   value: Value
+   teem: Teem
+   unit: Unit number
+   
+evaluations:
+   title: Evaluation
+   welcome: Welcome to Prometheus the Evaluations Tool.
+   
+   
+
 
