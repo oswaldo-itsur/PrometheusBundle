@@ -3,7 +3,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
         <title>{% block title %}Generic Title{% endblock %}</title>
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+          {% javascripts "@InformaticaPrometheusBundle/Resources/public/js/jquery.js" %}
+          <script type="text/javascript" src="{{ asset_url }}"></script>
+          {% endjavascripts %}
+        {% endblock javascripts %}
     </head>
     <body>
        {% block body %}

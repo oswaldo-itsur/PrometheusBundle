@@ -15,7 +15,7 @@ class AjaxController extends Controller
 {
      
     /**
-     * @Route("/profesores")
+     * @Route("/profesores", name="profesores_array")
      * @Template()
      */
     public function profesoresAction()
@@ -24,7 +24,6 @@ class AjaxController extends Controller
        $AJAXResponse = array('Blanca','Armando','Gamez');
        
        if ($request->isXmlHttpRequest() == true) {
-       
             $response = new Response(json_encode($AJAXResponse));
             $response->headers->set('Content-Type', 'application/json');
             return $response;

@@ -1,5 +1,5 @@
 <?php  
- namespace Informatica\PrometheusBundle\Controller;
+namespace Informatica\PrometheusBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

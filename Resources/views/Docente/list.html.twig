@@ -5,6 +5,13 @@ Lista de Docentes
 {% endblock %}
 
 {% block body %}
+    <script>
+        $(document).ready(function(){
+            $('#boton').click(function(){ 
+                $('#profesor').load("{{ path('docente_new') }}");
+            }); 
+        });
+    </script>
     <h2>Lista de Docentes</h2>
     <br/>
     <table border="1">
@@ -27,7 +34,11 @@ Lista de Docentes
             </tr>
         {% endfor %}
         <tr><td colspan="5" align="right"><a href="{{path('docente_new') }}">Nuevo Docente</a></td></tr>
+        <tr><td> <button id="boton">Ajax</button> </td> </tr>
     </table>
+    <div id="profesor">
+        
+    </div>
 
 
 {% endblock %}
