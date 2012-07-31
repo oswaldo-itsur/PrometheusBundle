@@ -1,5 +1,4 @@
 <?php
-
 namespace Informatica\PrometheusBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -48,12 +47,10 @@ class EvaluationController extends Controller
     {
 
         $defaultData = array('aplicador' => 'Escribe el nombre el aplicador');
-
+        $contrasena = $this->get('translator')->trans('evaluacion.contrasena');
         $form = $this->createFormBuilder($defaultData)
-         $contrasena = $this->get('translator')->trans('evaluacion.contrasena');
-        ->add('nocontrol', 'text',array('label'=> $this->get('translator')->trans('evaluacion.nocontrol');))
-        ->add('password', 'text',array('label'=>$contrasena))
-        ->add('aplicador', 'text')
+        ->add('nocontrol', 'text',array('label'=>$this->get('translator')->trans('evaluacion.nocontrol')))
+        ->add('password', 'text',array('label'=>$contrasena))->add('aplicador', 'text')
         ->getForm();
 
         if ($request->getMethod() == 'POST') {
