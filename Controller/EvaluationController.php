@@ -50,9 +50,8 @@ class EvaluationController extends Controller
         $contrasena = $this->get('translator')->trans('evaluacion.contrasena');
         $form = $this->createFormBuilder($defaultData)
         ->add('nocontrol', 'text',array('label'=>$this->get('translator')->trans('evaluacion.nocontrol')))
-        ->add('password', 'text',array('label'=>$contrasena))->add('aplicador', 'text')
-        ->add('nocontrol', 'text',array('label'=> $this->get('translator')->trans('evaluacion.nocontrol')))
-        ->add('password', 'text',array('label'=>$contrasena))
+        ->add('password', 'password',array('label'=>$contrasena))
+        ->add('examen', 'text',array('label'=>'Clave Examen'))
         ->add('aplicador', 'text')
         ->getForm();
 
@@ -62,8 +61,18 @@ class EvaluationController extends Controller
             $data = $form->getData();
             $nocontrol =  $data['nocontrol'];
             $password =  $data['password'];
+            $claveExamen = $data['examen'];
             $aplicador = $data['aplicador'];
             
+            $examen = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Examen')
+            ->findOneById($claveExamen);
+
+            if(!$examen) 
+            {
+                return $this->render('InformaticaPrometheusBundle:Evaluation:examNoExist.html.twig');
+
+            } 
+
             $alumno = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Alumno')
             ->findOneByNocontrol($nocontrol);
             if($alumno) 
@@ -73,6 +82,7 @@ class EvaluationController extends Controller
                       $session = $this->getRequest()->getSession();
                       $session->start();
                       $session->set('nocontrol', $alumno->getNocontrol());
+                      $session->set('exam', $claveExamen);
                       
                       return $this->redirect($this->generateUrl('evaluation_instruccions'));
                  }else
@@ -105,11 +115,14 @@ class EvaluationController extends Controller
     {
          $session = $this->getRequest()->getSession();
          $nocontrol = $session->get('nocontrol');
+         $claveExamen = $session->get('exam');
+
          $alumno = $this->getDoctrine()->getRepository('InformaticaPrometheusBundle:Alumno')
             ->findOneByNocontrol($nocontrol);
+        
         if($alumno)
         {
-             $hoja = HojaRespuestasFactory::getHojaRespuestas(1, $this->getDoctrine());
+             $hoja = HojaRespuestasFactory::getHojaRespuestas($claveExamen, $this->getDoctrine());
                           
              $hoja->setFecha( new \DateTime());
              $hoja->setCalificacion(0);
@@ -259,6 +272,7 @@ class EvaluationController extends Controller
        {
            $session->save();
            $session->set('nocontrol', null);
+           $session->set('exam', null);
            $session->set('activeexamen', null);
            $session->set('hojaid', null);
        }
