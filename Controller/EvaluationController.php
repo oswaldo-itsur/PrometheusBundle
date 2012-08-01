@@ -49,14 +49,11 @@ class EvaluationController extends Controller
         $defaultData = array('aplicador' => 'Escribe el nombre el aplicador');
         $contrasena = $this->get('translator')->trans('evaluacion.contrasena');
         $form = $this->createFormBuilder($defaultData)
-<<<<<<< HEAD
         ->add('nocontrol', 'text',array('label'=>$this->get('translator')->trans('evaluacion.nocontrol')))
         ->add('password', 'text',array('label'=>$contrasena))->add('aplicador', 'text')
-=======
         ->add('nocontrol', 'text',array('label'=> $this->get('translator')->trans('evaluacion.nocontrol')))
         ->add('password', 'text',array('label'=>$contrasena))
         ->add('aplicador', 'text')
->>>>>>> Traducciones
         ->getForm();
 
         if ($request->getMethod() == 'POST') {
